@@ -17,7 +17,15 @@ independent, safe subset: it does not embed CattcaJS and never uses `eval` or
 
 ## Preview
 
-After a build, open one of these self-contained files in a browser:
+Install dependencies and build the package first:
+
+```sh
+cd plugin/cattca-package
+npm install
+npm run build
+```
+
+Then open one of these self-contained files in a browser:
 
 - `dist/interactive.html` — interactive and offline-capable.
 - `dist/static.html` — initial state only.

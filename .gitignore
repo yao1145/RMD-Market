@@ -1,4 +1,5 @@
 node_modules/
 .DS_Store
 *.log
-plugin/bitcoin/dist/
+plugin/*/dist/
+plugin/*/artifacts/
