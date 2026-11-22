@@ -1,0 +1,512 @@
+@layer rmd.reset, rmd.defaults, rmd.components, rmd.themes, rmd.overrides;
+
+@layer rmd.themes {
+/* ==========================================================================
+   SCI-FI / SF-01 — design tokens
+   --------------------------------------------------------------------------
+   Layer 1  primitives  raw palette, scale and geometry values
+   Layer 2  semantics   purpose-named values; light is the default block
+   Layer 3  components  panel / table / form / navigation / chart contracts
+   --------------------------------------------------------------------------
+   Every selector is scoped to [data-rmd-theme="sci-fi"] so the theme can be
+   imported directly or registered through defineLocalTheme().
+   Radius contract: 0-2px. No pill geometry. No blur shadows.
+   Surface contract: page < surface > inset in light, page < surface > inset
+   reversed luminance in dark; both modes share the same semantic names.
+   Border contract: --line structural (weaker), --line-strong controls.
+   ========================================================================== */
+
+[data-rmd-theme="sci-fi"] {
+  color-scheme: light;
+
+  /* ---------------------------------------------------------- L1 primitives */
+
+  /* Neutral ramp — cold graphite, never warm. */
+  --sf-neutral-0: #ffffff;
+  --sf-neutral-25: #fbfcfd;
+  --sf-neutral-50: #f7f9fb;
+  --sf-neutral-100: #eef2f5;
+  --sf-neutral-150: #e6ecf1;
+  --sf-neutral-200: #dde5ec;
+  --sf-neutral-300: #ccd6df;
+  --sf-neutral-400: #a7b5c2;
+  --sf-neutral-500: #7d8fa1;
+  --sf-neutral-600: #5f7183;
+  --sf-neutral-700: #47596b;
+  --sf-neutral-800: #2c3d4d;
+  --sf-neutral-900: #14212d;
+  --sf-neutral-950: #0a121a;
+  --sf-neutral-1000: #05090d;
+
+  /* Signal ramp — the only saturated family in the system. */
+  --sf-cyan-100: #d8f5fc;
+  --sf-cyan-200: #a8eaf7;
+  --sf-cyan-300: #6cdcf0;
+  --sf-cyan-400: #2ec9e6;
+  --sf-cyan-500: #12b0cf;
+  --sf-cyan-600: #0a89a5;
+  --sf-cyan-700: #096b87;
+  --sf-cyan-800: #0b566d;
+  --sf-cyan-900: #0d4557;
+
+  /* Status primitives. */
+  --sf-teal-600: #076b4f;
+  --sf-teal-400: #3ddc97;
+  --sf-amber-700: #8a5a00;
+  --sf-amber-400: #f4b942;
+  --sf-red-700: #b0253b;
+  --sf-red-400: #ff6b81;
+  --sf-violet-600: #6d4aa1;
+  --sf-violet-400: #b394ea;
+  --sf-blue-600: #2f5f9e;
+  --sf-blue-400: #7fb2ff;
+
+  /* Geometry — 4px base grid, heavy rules, square corners. */
+  --sf-unit: 4px;
+  --sf-grid-gutter: 16px;
+  --sf-grid-max: 1120px;
+  --sf-hairline: 1px;
+  --sf-rule: 2px;
+  --sf-radius-0: 0px;
+  --sf-radius-1: 2px;
+  --sf-radius-2: 2px;
+
+  --sf-duration-1: 80ms;
+  --sf-duration-2: 120ms;
+  --sf-duration-3: 180ms;
+  --sf-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Type scale — four reading levels plus machine micro text. */
+  --sf-type-micro: 12px;
+  --sf-type-label: 12px;
+  --sf-type-body: 14px;
+  --sf-type-title: 21px;
+  --sf-type-display: 28px;
+  --sf-track-micro: 0.14em;
+  --sf-track-label: 0.1em;
+  --sf-track-title: 0.02em;
+  --sf-track-component: 0.08em;
+  /* Sentence-case machine prose: hints, readouts, notes. */
+  --sf-track-aux: 0.05em;
+  /* Bilingual tracking factor — 1 for English, tightened under :lang(zh).
+     Every machine letter-spacing multiplies its token by this factor. */
+  --sf-track-scale: 1;
+
+  --sf-font-display: var(--font-sans);
+  --sf-font-ui: var(--font-sans);
+  --sf-font-data: var(--font-mono);
+
+  /* ---------------------------------------------------- L2 semantic: light */
+
+  /* Surfaces — page / surface / inset, three distinct levels. */
+  --paper: #f4f8fb;
+  --surface: #ffffff;
+  --surface-subtle: #e8f0f5;
+  --surface-hover: #eff4f8;
+  --surface-active: #e2ebf2;
+  --document-bg: var(--surface);
+
+  /* Text */
+  --ink: #142837;
+  --ink-soft: #475c6e;
+  --ink-muted: #5a6f80;
+
+  /* Borders — structural weaker than control borders. */
+  --line: #d9e3eb;
+  --line-strong: #6e8496;
+
+  /* Accent: a cold instrument blue. Filled controls use white ink. */
+  --accent: #087d9b;
+  --accent-hover: #066a85;
+  --accent-soft: #e1f0f5;
+  --accent-line: #7fb6c9;
+  --accent-ink: #ffffff;
+  --accent-text: #055f79;
+  --info: var(--accent);
+  --info-soft: var(--accent-soft);
+
+  /* Backwards-compatible aliases. */
+  --blue: var(--accent);
+  --blue-deep: var(--accent-hover);
+  --blue-soft: var(--accent-soft);
+  --blue-line: var(--accent-line);
+
+  /* Status */
+  --teal: #076b4f;
+  --success: #076b4f;
+  --success-soft: #e2f4ed;
+  --success-line: #9fd8c4;
+  --warning: #8a5a00;
+  --warning-soft: #fbf1dc;
+  --warning-line: #e3c98e;
+  --danger: #b0253b;
+  --danger-soft: #fbe9ec;
+  --danger-line: #e6b3bd;
+  --neutral-soft: #e8f0f5;
+
+  /* Focus — a hard double rule, never a soft glow. The kernel never reads
+     --focus-ring; the real hook is --pu-focus-halo (§2.5). */
+  --focus: var(--accent-text);
+  --focus-outline: 2px solid var(--focus);
+  --pu-focus-halo: 0 0 0 1px var(--surface), 0 0 0 3px var(--focus);
+
+  /* Data series — cyan dominant, then blue / green / violet / amber only. */
+  --chart-1: #087d9b;
+  --chart-2: #2f5f9e;
+  --chart-3: #0f766e;
+  --chart-4: #6d4aa1;
+  --chart-5: #9a6a12;
+  --chart-6: #4c7dc0;
+  --chart-7: #4e8a3a;
+  --chart-8: #8a63c9;
+  --chart-grid: #d3dde6;
+  --chart-axis: #5a6f80;
+
+  /* The interactive chart consumes these through inline styles, so theme
+     stroke/fill rules can never win — only the variables can. */
+  --rmd-chart-bar-radius: 0px;
+  --rmd-chart-line-width: 1.6;
+  --rmd-chart-line-highlight-width: 2.4;
+  --rmd-chart-point-stroke-width: 1.5;
+  --rmd-chart-area-opacity: 0.1;
+  --rmd-chart-dim-opacity: 0.45;
+  --rmd-chart-mark-stroke: var(--surface);
+  --rmd-chart-grid: var(--chart-grid);
+  --rmd-chart-axis: var(--chart-axis);
+  --rmd-chart-axis-title: var(--ink-soft);
+  --rmd-chart-guide: var(--accent);
+
+  --coordinate-surface: #e8f0f5;
+  --coordinate-grid: #ccd9e4;
+  --coordinate-axis: #47596b;
+  --coordinate-point: var(--accent);
+
+  /* Code — an inset instrument surface; every token clears 4.5:1 on it. */
+  --code-bg: #edf2f7;
+  --code-bg-deep: #dde5ec;
+  --code-ink: #16232f;
+  --md-code-token-comment: #4f6071;
+  --md-code-token-keyword: #2f5f9e;
+  --md-code-token-string: #076b4f;
+  --md-code-token-number: #8a5a00;
+  --md-code-token-title: #096b87;
+  --md-code-token-attr: #b0253b;
+  --md-code-token-meta: #6d4aa1;
+  --md-code-token-addition: #076b4f;
+  --md-code-token-deletion: #b0253b;
+
+  /* Type */
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-md: 14px;
+  --text-lg: 16px;
+  --text-xl: 21px;
+  --text-2xl: 28px;
+  --text-h5: 0.83em;
+  --text-h6: 0.75em;
+  --text-block-title: 13px;
+  --text-block-subtitle: 12px;
+  --leading-tight: 1.15;
+  --leading-snug: 1.4;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.7;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --field-gap: var(--space-4);
+
+  /* Radius */
+  --radius-control: var(--sf-radius-0);
+  --radius-card: var(--sf-radius-0);
+  --radius-panel: var(--sf-radius-0);
+  --radius-pill: var(--sf-radius-0);
+  --radius-field: var(--sf-radius-0);
+  --radius-field-multiline: var(--sf-radius-0);
+  --radius-sm: var(--sf-radius-0);
+  --radius-md: var(--sf-radius-0);
+  --radius-lg: var(--sf-radius-0);
+  --radius-xl: var(--sf-radius-0);
+  --radius-circle: var(--sf-radius-0);
+  --radius-hairline: var(--sf-radius-1);
+  --radius-2xs: var(--sf-radius-1);
+  --radius-xs: var(--sf-radius-1);
+  --radius-inset: var(--sf-radius-0);
+  --radius-toolbar: var(--sf-radius-0);
+
+  /* Baseline primitives consumed directly by native buttons and surfaces. */
+  --pu-radius-xs: var(--sf-radius-1);
+  --pu-radius-sm: var(--sf-radius-1);
+  --pu-radius-md: var(--sf-radius-1);
+  --pu-radius-lg: var(--sf-radius-1);
+  --pu-radius-xl: var(--sf-radius-1);
+
+  /* Controls */
+  --control-height-sm: 28px;
+  --control-height: 34px;
+  --control-height-lg: 40px;
+  --control-padding-x: 10px;
+  --control-padding-y: 7px;
+  --control-inset-x: 12px;
+  --disabled-opacity: 0.45;
+  --control-selected: var(--accent);
+  --control-selected-ink: var(--accent-ink);
+  --control-track: #dbe3ea;
+  --control-thumb: var(--accent);
+
+  /* Motion and elevation — mechanical, no soft depth. */
+  --motion-fast: var(--sf-duration-1);
+  --motion-base: var(--sf-duration-2);
+  --motion-slow: var(--sf-duration-3);
+  --ease-standard: var(--sf-ease);
+  --shadow-sm: 0 0 0 1px var(--line);
+  --shadow-md: 0 0 0 1px var(--line-strong);
+
+  --font-sans: "Inter", "IBM Plex Sans", "Segoe UI Variable", "Segoe UI",
+    ui-sans-serif, system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "Noto Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", "Cascadia Mono", "Consolas",
+    "SFMono-Regular", "Menlo", "Liberation Mono", monospace;
+
+  --formula-ink: #000000;
+
+  /* ------------------------------------------------ L3 component: light */
+
+  --sf-canvas: var(--paper);
+  /* Background texture only: weaker than chart grid, borders and all text. */
+  --sf-grid-line: rgb(10 30 45 / 4%);
+  --sf-label-ink: var(--ink-muted);
+  --sf-meta-ink: var(--ink-muted);
+  --sf-corner-ink: var(--accent);
+  --sf-signal-ink: var(--accent-text);
+
+  --sf-panel-bg: var(--surface);
+  --sf-panel-head-bg: var(--surface-subtle);
+  --sf-panel-border: var(--line);
+  --sf-panel-rule: var(--line);
+
+  --sf-table-bg: var(--surface);
+  --sf-table-head-bg: #e8f0f5;
+  --sf-table-row-hover: var(--surface-hover);
+  --sf-table-row-selected: var(--accent-soft);
+
+  --sf-field-bg: #e8f0f5;
+  --sf-field-border: var(--line-strong);
+  --sf-field-hover: var(--accent-line);
+
+  --sf-nav-bg: var(--surface-subtle);
+  --sf-nav-active-bg: var(--accent-soft);
+
+  --sf-chart-frame: var(--surface);
+  --sf-chart-head: var(--surface-subtle);
+
+  /* Shared slider contract: a square block on a hairline rail. */
+  --rmd-slider-thumb-width: 14px;
+  --rmd-slider-thumb-height: 14px;
+  --rmd-slider-thumb-radius: 0px;
+  --rmd-slider-track-height: 4px;
+  --rmd-slider-track-radius: 0px;
+  --rmd-slider-thumb-border-width: 2px;
+  --rmd-slider-thumb-background: var(--accent);
+  --rmd-slider-thumb-border-color: var(--surface);
+  --rmd-slider-thumb-shadow: 0 0 0 1px var(--accent);
+  --rmd-slider-track-background: var(--control-track);
+  --rmd-slider-fill-background: var(--accent);
+
+  /* UIArc calendar / date-picker / select / slider-bubble radii are component
+     variables, not classic radius tokens; pinned to the 0-2px contract. */
+  --rmd-calendar-day-radius: 0px;
+  --rmd-calendar-nav-radius: 0px;
+  --rmd-date-picker-radius: 0px;
+  --rmd-date-picker-popover-radius: 0px;
+  --rmd-date-picker-action-radius: 0px;
+  --rmd-select-radius: 0px;
+  --rmd-select-menu-radius: 0px;
+  --rmd-select-item-radius: 0px;
+  --rmd-select-menu-radius-offset: 0px;
+  --rmd-select-item-radius-offset: 0px;
+  --rmd-slider-bubble-radius: 0px;
+  --rmd-slider-tick-radius: 0px;
+
+  /* Checkbox geometry and switch elevation: hard 1px rings, never blur. */
+  --rmd-uiarc-checkbox-size: 16px;
+  --rmd-uiarc-checkbox-radius: 0px;
+  --rmd-switch-shadow: 0 0 0 1px var(--line);
+  --rmd-switch-press-shadow: 0 0 0 1px var(--line-strong);
+
+  --sf-glow: 0 0 0 1px var(--accent), 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+  --sf-hatch: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ink) 7%, transparent) 0 1px,
+    transparent 1px 6px
+  );
+}
+
+/* ------------------------------------------------------------ semantic: dark */
+
+[data-rmd-theme="sci-fi"][data-color-scheme="dark"] {
+  color-scheme: dark;
+
+  /* Surfaces — lifted one step from black so levels stay separable. */
+  --paper: #0c121a;
+  --surface: #141f2b;
+  --surface-subtle: #101923;
+  --surface-hover: #1b2938;
+  --surface-active: #223243;
+  --document-bg: var(--surface);
+
+  /* Text */
+  --ink: #e2eaf2;
+  --ink-soft: #a2b3c2;
+  --ink-muted: #8ca0b3;
+
+  /* Borders */
+  --line: #223140;
+  --line-strong: #527089;
+
+  /* Accent: instrument cyan. Filled controls use near-black ink. */
+  --accent: #45c3d7;
+  --accent-hover: #63d2e4;
+  --accent-soft: #0e2c3a;
+  --accent-line: #2a6e82;
+  --accent-ink: #062028;
+  --accent-text: #45c3d7;
+  --info: var(--accent);
+  --info-soft: var(--accent-soft);
+
+  --blue: var(--accent);
+  --blue-deep: var(--accent-hover);
+  --blue-soft: var(--accent-soft);
+  --blue-line: var(--accent-line);
+
+  /* Status */
+  --teal: #3ddc97;
+  --success: #3ddc97;
+  --success-soft: #0a2b21;
+  --success-line: #1d5c45;
+  --warning: #f4b942;
+  --warning-soft: #2b2008;
+  --warning-line: #6b5220;
+  --danger: #ff6b81;
+  --danger-soft: #331119;
+  --danger-line: #6e2836;
+  --neutral-soft: #101923;
+
+  /* Focus */
+  --focus: var(--accent-text);
+  --focus-outline: 2px solid var(--focus);
+
+  /* Data series — same controlled families as light, luminance-lifted. */
+  --chart-1: #45c3d7;
+  --chart-2: #7fb2ff;
+  --chart-3: #5fe0b4;
+  --chart-4: #b394ea;
+  --chart-5: #f2c879;
+  --chart-6: #5b8def;
+  --chart-7: #7ed491;
+  --chart-8: #c9a8f5;
+  --chart-grid: #223140;
+  --chart-axis: #8ca0b3;
+
+  /* Dimmed series need 0.45 in the dark scheme to stay legible. */
+  --rmd-chart-dim-opacity: 0.45;
+
+  --coordinate-surface: #101923;
+  --coordinate-grid: #223140;
+  --coordinate-axis: #8ca0b3;
+  --coordinate-point: var(--accent);
+
+  /* Code */
+  --code-bg: #0a1219;
+  --code-bg-deep: #070d14;
+  --code-ink: #dce8f4;
+  --md-code-token-comment: #8ca0b3;
+  --md-code-token-keyword: #8fc7ff;
+  --md-code-token-string: #8fe3c8;
+  --md-code-token-number: #f2c879;
+  --md-code-token-title: #6cdcf0;
+  --md-code-token-attr: #ffb3c0;
+  --md-code-token-meta: #b394ea;
+  --md-code-token-addition: #8fe3c8;
+  --md-code-token-deletion: #ff9daa;
+
+  /* Controls */
+  --control-selected: var(--accent);
+  --control-selected-ink: var(--accent-ink);
+  --control-track: #223140;
+  --control-thumb: var(--accent);
+
+  --formula-ink: #ffffff;
+
+  --shadow-sm: 0 0 0 1px var(--line);
+  --shadow-md: 0 0 0 1px var(--line-strong);
+
+  /* ------------------------------------------------- L3 component: dark */
+
+  --sf-canvas: var(--paper);
+  --sf-grid-line: rgb(110 190 220 / 3%);
+  --sf-label-ink: var(--ink-muted);
+  --sf-meta-ink: var(--ink-muted);
+  --sf-corner-ink: var(--accent);
+  --sf-signal-ink: var(--accent-text);
+
+  --sf-panel-bg: var(--surface);
+  --sf-panel-head-bg: var(--surface-subtle);
+  --sf-panel-border: var(--line);
+  --sf-panel-rule: var(--line);
+
+  --sf-table-bg: var(--surface);
+  --sf-table-head-bg: #101923;
+  --sf-table-row-hover: #1b2938;
+  --sf-table-row-selected: var(--accent-soft);
+
+  --sf-field-bg: #101923;
+  --sf-field-border: var(--line-strong);
+  --sf-field-hover: var(--accent-line);
+
+  --sf-nav-bg: #101923;
+  --sf-nav-active-bg: var(--accent-soft);
+
+  --sf-chart-frame: var(--surface);
+  --sf-chart-head: #101923;
+
+  --sf-glow: 0 0 0 1px var(--accent), 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+
+  /* Shared slider contract in the dark scheme. */
+  --rmd-slider-thumb-background: var(--accent);
+  --rmd-slider-thumb-border-color: var(--surface);
+  --rmd-slider-track-background: var(--control-track);
+  --rmd-slider-fill-background: var(--accent);
+
+  --sf-hatch: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ink) 8%, transparent) 0 1px,
+    transparent 1px 6px
+  );
+}
+
+/* Native fields use the theme's slider design through their own contract. */
+[data-rmd-theme="sci-fi"] {
+  --rmd-native-range-thumb-width: var(--rmd-slider-thumb-width);
+  --rmd-native-range-thumb-height: var(--rmd-slider-thumb-height);
+  --rmd-native-range-thumb-radius: var(--rmd-slider-thumb-radius);
+  --rmd-native-range-thumb-border-width: var(--rmd-slider-thumb-border-width);
+  --rmd-native-range-thumb-background: var(--rmd-slider-thumb-background);
+  --rmd-native-range-thumb-border-color: var(--rmd-slider-thumb-border-color);
+  --rmd-native-range-thumb-shadow: var(--rmd-slider-thumb-shadow);
+  --rmd-native-range-track-height: var(--rmd-slider-track-height);
+  --rmd-native-range-track-radius: var(--rmd-slider-track-radius);
+  --rmd-native-range-track-background: var(--rmd-slider-track-background);
+  --rmd-native-range-fill-background: var(--rmd-slider-fill-background);
+}
+
+}

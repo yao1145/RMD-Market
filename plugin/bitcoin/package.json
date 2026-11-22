@@ -1,0 +1,14 @@
+{
+  "name": "reactive-md-bitcoin-component-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A <bitcoin> component for ReactiveMD with a Binance BTC/USDT WebSocket host channel.",
+  "scripts": {
+    "dev": "node ../../../ReactiveMD/node_modules/vite/bin/vite.js --config vite.config.ts",
+    "build": "node ../../../ReactiveMD/node_modules/vite/bin/vite.js build --config vite.config.ts",
+    "typecheck": "node ../../../ReactiveMD/node_modules/typescript/bin/tsc --noEmit",
+    "verify": "node scripts/verify.mjs",
+    "verify:live": "node scripts/verify-live.mjs"
+  }
+}

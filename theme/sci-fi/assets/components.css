@@ -1,0 +1,2370 @@
+@layer rmd.reset, rmd.defaults, rmd.components, rmd.themes, rmd.overrides;
+
+@layer rmd.themes {
+/* ==========================================================================
+   SCI-FI / SF-01 — component layer
+   --------------------------------------------------------------------------
+   Consumes only tokens from tokens.css. Visual grammar:
+   · rectangles, 0-4px radii, 1-2px rules
+   · modules separated by hard borders, not shadows
+   · state is carried by stroke, signal lines and mono labels
+   · machine text (labels, metadata, values) is always mono + uppercase
+   ========================================================================== */
+
+/* ------------------------------------------------------------- 1. document */
+
+[data-rmd-theme="sci-fi"].md-document {
+  max-width: 880px;
+  padding: var(--space-6);
+  border: 1px solid var(--line);
+  border-top: var(--sf-rule) solid var(--accent);
+  background-color: var(--document-bg);
+  background-image:
+    linear-gradient(to right, var(--sf-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--sf-grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+  color: var(--ink);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+}
+
+[data-rmd-theme="sci-fi"].md-document:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+
+/* ----------------------------------------------------------- 2. typography */
+
+[data-rmd-theme="sci-fi"].md-document h1,
+[data-rmd-theme="sci-fi"].md-document h2,
+[data-rmd-theme="sci-fi"].md-document h3,
+[data-rmd-theme="sci-fi"].md-document h4,
+[data-rmd-theme="sci-fi"].md-document h5,
+[data-rmd-theme="sci-fi"].md-document h6 {
+  color: var(--ink);
+  font-weight: var(--weight-bold);
+  letter-spacing: calc(var(--sf-track-title) * var(--sf-track-scale));
+  line-height: var(--leading-tight);
+}
+
+[data-rmd-theme="sci-fi"].md-document h1 {
+  position: relative;
+  margin: 0 0 var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line-strong);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: calc(0.015em * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"].md-document h1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 72px;
+  height: 2px;
+  background: var(--accent);
+}
+
+[data-rmd-theme="sci-fi"].md-document h2 {
+  margin: var(--space-6) 0 var(--space-3);
+  padding-left: var(--space-3);
+  border-left: var(--sf-rule) solid var(--accent);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(0.02em * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"].md-document h3 {
+  margin: var(--space-5) 0 var(--space-2);
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-family: var(--sf-font-ui);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-title) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"].md-document h4,
+[data-rmd-theme="sci-fi"].md-document h5,
+[data-rmd-theme="sci-fi"].md-document h6 {
+  color: var(--ink-muted);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-micro) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"].md-document h5 {
+  font-size: var(--text-h5);
+}
+
+[data-rmd-theme="sci-fi"].md-document h6 {
+  font-size: var(--text-h6);
+}
+
+[data-rmd-theme="sci-fi"].md-document p {
+  margin: 0.7em 0;
+  letter-spacing: normal;
+}
+
+[data-rmd-theme="sci-fi"].md-document strong {
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+}
+
+[data-rmd-theme="sci-fi"].md-document a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+[data-rmd-theme="sci-fi"].md-document a:hover {
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"].md-document a:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"].md-document blockquote {
+  margin: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: var(--sf-rule) solid var(--accent);
+  background: var(--surface-subtle);
+  color: var(--ink-soft);
+  font-style: normal;
+}
+
+[data-rmd-theme="sci-fi"].md-document blockquote p:first-child {
+  margin-top: 0;
+}
+
+[data-rmd-theme="sci-fi"].md-document blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+[data-rmd-theme="sci-fi"].md-document hr {
+  position: relative;
+  height: 1px;
+  margin: var(--space-6) 0;
+  border: 0;
+  background: var(--line);
+}
+
+[data-rmd-theme="sci-fi"].md-document hr::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+
+[data-rmd-theme="sci-fi"].md-document ul > li::marker {
+  color: var(--accent);
+  font-family: var(--sf-font-data);
+}
+
+[data-rmd-theme="sci-fi"].md-document ol > li::marker {
+  color: var(--accent-text);
+  font-family: var(--sf-font-data);
+  font-size: 0.88em;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-list {
+  padding-left: 1.4em;
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-list-item {
+  margin: 0.3em 0;
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-inline-code {
+  padding: 0.06em 0.38em;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface-subtle);
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  letter-spacing: calc(0.01em * var(--sf-track-scale));
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-image {
+  border: 1px solid var(--line);
+  border-radius: 0;
+}
+
+/* Bilingual tracking: CJK glyphs are full-width, so the wide English machine
+   tracking collapses to a tight fraction (0.14em -> 0.028, 0.1 -> 0.02,
+   0.08 -> 0.016, 0.05 -> 0.01). Every scaled letter-spacing above reads this
+   factor. :lang() also matches an ancestor lang, so a host-level lang attribute
+   reaches the whole document; the engine sets lang on the theme root itself. */
+[data-rmd-theme="sci-fi"]:lang(zh),
+[data-rmd-theme="sci-fi"] :lang(zh) {
+  --sf-track-scale: 0.2;
+}
+
+/* ------------------------------------------------------- 3. panels & cards */
+
+[data-rmd-theme="sci-fi"] .local-panel {
+  position: relative;
+  margin: var(--space-4) 0;
+  padding: 0;
+  border: 1px solid var(--sf-panel-border);
+  border-radius: 0;
+  background: var(--sf-panel-bg);
+}
+
+[data-rmd-theme="sci-fi"] .local-panel::before,
+[data-rmd-theme="sci-fi"] .local-panel::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: var(--sf-corner-ink);
+  border-style: solid;
+  pointer-events: none;
+}
+
+[data-rmd-theme="sci-fi"] .local-panel::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+
+[data-rmd-theme="sci-fi"] .local-panel::after {
+  right: -1px;
+  bottom: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-panel-head {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--sf-panel-rule);
+  background: var(--sf-panel-head-bg);
+}
+
+[data-rmd-theme="sci-fi"].local-document .local-panel-title,
+[data-rmd-theme="sci-fi"] .local-panel-title {
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--text-block-title);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-component) * var(--sf-track-scale));
+  line-height: var(--leading-snug);
+  text-transform: uppercase;
+  /* The baseline ellipsizes panel titles on one line; a module name is content,
+     so it wraps instead of truncating. */
+  white-space: normal;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+}
+
+[data-rmd-theme="sci-fi"] .local-panel-title::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: var(--space-2);
+  background: var(--accent);
+  vertical-align: 1px;
+}
+
+[data-rmd-theme="sci-fi"] .local-panel-body {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+
+[data-rmd-theme="sci-fi"].local-document .md-button.local-panel-reset,
+[data-rmd-theme="sci-fi"] .local-panel .local-panel-reset {
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink-muted);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    border-color var(--motion-base) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-panel .local-panel-reset:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .local-panel .local-panel-reset:active:not(:disabled),
+[data-rmd-theme="sci-fi"].local-document .md-button.local-panel-reset:active:not(:disabled) {
+  border-color: var(--accent-line);
+  background: var(--surface-active);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .md-card {
+  gap: 0;
+  margin: var(--space-4) 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  --local-table-surface: var(--sf-panel-bg);
+  background: var(--sf-panel-bg);
+}
+
+[data-rmd-theme="sci-fi"] .md-card-title {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line);
+  background: var(--sf-panel-head-bg);
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--text-block-title);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-component) * var(--sf-track-scale));
+  line-height: var(--leading-snug);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+[data-rmd-theme="sci-fi"] .md-card-body {
+  padding: var(--space-3);
+}
+
+[data-rmd-theme="sci-fi"] .md-card-body > :first-child {
+  margin-top: 0;
+}
+
+[data-rmd-theme="sci-fi"] .md-card-body > :last-child {
+  margin-bottom: 0;
+}
+
+[data-rmd-theme="sci-fi"].local-document .local-card {
+  border: 0;
+  background: var(--sf-panel-bg);
+}
+
+[data-rmd-theme="sci-fi"].local-document .local-card .md-card-title {
+  border-bottom: 0;
+}
+
+/* Strong matrix: 1px gutters render as shared rules. */
+[data-rmd-theme="sci-fi"] .local-grid {
+  gap: 1px;
+  margin: var(--space-4) 0;
+  padding: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+[data-rmd-theme="sci-fi"] .local-grid > * {
+  margin: 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-grid > .md-card,
+[data-rmd-theme="sci-fi"] .local-grid > .local-card {
+  height: 100%;
+  border: 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-section {
+  margin: var(--space-4) 0;
+}
+
+/* ------------------------------------------------------ 4. tables & data */
+
+/* D6 §2.6.6: 基线表格内边距变量必须落在文档根上，:where(.md-document ...) 才能取到。 */
+[data-rmd-theme="sci-fi"].md-document,
+[data-rmd-theme="sci-fi"] .md-document {
+  --table-cell-padding-y: 8px;
+  --table-cell-padding-x: 12px;
+}
+
+[data-rmd-theme="sci-fi"] .md-table-scroll {
+  margin: var(--space-4) 0;
+  border: 1px solid var(--line);
+  background: var(--sf-table-bg);
+}
+
+[data-rmd-theme="sci-fi"] .md-table {
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+[data-rmd-theme="sci-fi"] .md-table th,
+[data-rmd-theme="sci-fi"] .md-table td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+[data-rmd-theme="sci-fi"] .md-table th {
+  background: var(--sf-table-head-bg);
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .md-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+[data-rmd-theme="sci-fi"] .md-table tbody tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--surface) 55%, var(--surface-subtle));
+}
+
+[data-rmd-theme="sci-fi"] .md-table tbody tr:hover td {
+  background: var(--sf-table-row-hover);
+}
+
+[data-rmd-theme="sci-fi"] .md-table tbody tr:last-child td {
+  border-bottom: 1px solid var(--line);
+}
+
+/* Enhanced table and chart containers share one frame language. */
+[data-rmd-theme="sci-fi"] .local-visual {
+  position: relative;
+  margin: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--sf-chart-frame);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid var(--sf-corner-ink);
+  border-bottom: 1px solid var(--sf-corner-ink);
+  pointer-events: none;
+}
+
+[data-rmd-theme="sci-fi"].local-document .local-visual-title,
+[data-rmd-theme="sci-fi"] .local-visual-title {
+  margin: 0 0 var(--space-3);
+  padding: 0 0 var(--space-2);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--text-block-title);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-component) * var(--sf-track-scale));
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-title::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: var(--space-2);
+  background: var(--accent);
+  vertical-align: 1px;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-svg {
+  font-family: var(--sf-font-data);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-svg text {
+  font-family: var(--sf-font-data);
+  letter-spacing: calc(0.02em * var(--sf-track-scale));
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-axis-label {
+  font-size: var(--sf-type-micro);
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-axis-title {
+  font-size: var(--sf-type-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-legend {
+  gap: var(--space-1) var(--space-3);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-legend-item {
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-swatch {
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-bar {
+  shape-rendering: crispEdges;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-donut-slice {
+  stroke: var(--surface);
+  stroke-width: 2px;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-node-shape {
+  rx: 0;
+  stroke-width: 1px;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-node-text {
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-table-scroll {
+  border: 1px solid var(--line);
+  background: var(--sf-table-bg);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-table th {
+  background: var(--sf-table-head-bg);
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-table tbody tr:hover td {
+  background: var(--sf-table-row-hover);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-table tbody tr.is-selected td {
+  background: var(--sf-table-row-selected);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-search input {
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--sf-field-border);
+  border-radius: 0;
+  background: var(--sf-field-bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  transition:
+    border-color var(--motion-base) var(--ease-standard),
+    background-color var(--motion-base) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-search input:focus-visible {
+  border-color: var(--accent);
+  outline: var(--focus-outline);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-readout,
+[data-rmd-theme="sci-fi"] .local-visual-message,
+[data-rmd-theme="sci-fi"] .local-visual-notes,
+[data-rmd-theme="sci-fi"] .local-visual-diagram-detail {
+  color: var(--ink-muted);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  line-height: var(--leading-snug);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-diagram-detail > strong {
+  color: var(--ink-soft);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-edge-label {
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-component) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-sort-button {
+  border-radius: 0;
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-sort-button:hover,
+[data-rmd-theme="sci-fi"] .local-visual-sort-button.is-sorted {
+  color: var(--accent-text);
+  text-decoration-color: var(--accent-line);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-sort-button:active:not(:disabled) {
+  background: var(--surface-active);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-sort-button:disabled {
+  border-color: var(--line);
+  color: var(--ink-muted);
+  opacity: var(--disabled-opacity);
+  cursor: not-allowed;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-pagination {
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-pagination button {
+  padding: 2px var(--space-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    border-color var(--motion-base) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-pagination button:not(:disabled):hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-pagination button:active:not(:disabled) {
+  border-color: var(--accent-line);
+  background: var(--surface-active);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-pagination button:disabled {
+  border-color: var(--line);
+  color: var(--ink-muted);
+  opacity: var(--disabled-opacity);
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-pagination button:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-timeline-bar {
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-visual-timeline-track {
+  border-radius: 0;
+}
+
+/* ------------------------------------------------------------- 5. buttons */
+
+[data-rmd-theme="sci-fi"].md-document .md-button,
+[data-rmd-theme="sci-fi"] .md-button {
+  min-height: var(--control-height);
+  margin: 0 var(--space-1) var(--space-1) 0;
+  padding: 0 var(--control-inset-x);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+  box-shadow: none;
+}
+
+[data-rmd-theme="sci-fi"] .md-button:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--surface-hover);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .md-button:active:not(:disabled) {
+  background: var(--surface-active);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+[data-rmd-theme="sci-fi"] .md-button:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+[data-rmd-theme="sci-fi"] .md-button-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+[data-rmd-theme="sci-fi"] .md-button-primary:hover:not(:disabled) {
+  border-color: var(--accent-hover);
+  background: var(--accent-hover);
+  color: var(--accent-ink);
+}
+
+[data-rmd-theme="sci-fi"] .md-button-primary:active:not(:disabled) {
+  background: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-ink);
+}
+
+[data-rmd-theme="sci-fi"] .md-button-secondary {
+  border-color: var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+[data-rmd-theme="sci-fi"] .md-button-quiet {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ink-muted);
+}
+
+[data-rmd-theme="sci-fi"] .md-button-quiet:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+
+[data-rmd-theme="sci-fi"] .md-button:disabled {
+  border-color: var(--line);
+  background: var(--sf-hatch);
+  color: var(--ink-muted);
+  opacity: var(--disabled-opacity);
+  cursor: not-allowed;
+}
+
+[data-rmd-theme="sci-fi"].local-document .md-button.local-counter-button,
+[data-rmd-theme="sci-fi"].local-document .md-button.local-counter-reset {
+  min-height: var(--control-height);
+  padding: 0 var(--space-3);
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-counter-value {
+  padding: 0 var(--space-2);
+  border: 1px solid var(--line-strong);
+  background: var(--sf-field-bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  line-height: var(--control-height);
+  min-height: var(--control-height);
+}
+
+/* D3: baseline gives every bare <button> --pu-radius-md (10px); the theme's
+   .md-button skin does not reach them, so the plot legend button stayed round. */
+[data-rmd-theme="sci-fi"] button:not(.md-button) { border-radius: 0; }
+
+/* --------------------------------------------------------------- 6. forms */
+
+[data-rmd-theme="sci-fi"] .md-control {
+  gap: var(--space-1);
+  margin: var(--space-3) 0;
+}
+
+[data-rmd-theme="sci-fi"].local-document .md-label,
+[data-rmd-theme="sci-fi"] .md-label,
+[data-rmd-theme="sci-fi"] .local-radio-group legend,
+[data-rmd-theme="sci-fi"] .local-checklist legend,
+[data-rmd-theme="sci-fi"] .local-multi-toolbar label {
+  color: var(--sf-label-ink);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-micro) * var(--sf-track-scale));
+  line-height: var(--leading-snug);
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"].local-document .md-text-input,
+[data-rmd-theme="sci-fi"] .md-text-input {
+  max-width: 100%;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--sf-field-border);
+  border-radius: 0;
+  background: var(--sf-field-bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: calc(0.01em * var(--sf-track-scale));
+  box-shadow: none;
+  transition:
+    border-color var(--motion-base) var(--ease-standard),
+    background-color var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-base) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .md-text-input {
+  height: var(--control-height);
+}
+
+[data-rmd-theme="sci-fi"] textarea.md-text-input {
+  min-height: 84px;
+  height: auto;
+  padding: var(--space-2);
+  line-height: var(--leading-normal);
+  resize: vertical;
+}
+
+[data-rmd-theme="sci-fi"] .md-text-input:hover:not(:disabled) {
+  border-color: var(--sf-field-hover);
+}
+
+[data-rmd-theme="sci-fi"] .md-text-input:focus-visible {
+  border-color: var(--accent);
+  outline: var(--focus-outline);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+[data-rmd-theme="sci-fi"] .md-text-input[aria-invalid="true"],
+[data-rmd-theme="sci-fi"].local-document .md-text-input[aria-invalid="true"] {
+  border-color: var(--danger);
+  box-shadow: inset 0 0 0 1px var(--danger);
+}
+
+[data-rmd-theme="sci-fi"] .md-text-input[aria-invalid="true"]:focus-visible,
+[data-rmd-theme="sci-fi"].local-document .md-text-input[aria-invalid="true"]:focus-visible {
+  outline-color: var(--danger);
+}
+
+[data-rmd-theme="sci-fi"] .md-text-input:disabled {
+  border-color: var(--line);
+  background: var(--sf-hatch);
+  color: var(--ink-muted);
+  opacity: var(--disabled-opacity);
+}
+
+[data-rmd-theme="sci-fi"] .md-text-input::placeholder {
+  color: var(--ink-muted);
+  opacity: 1;
+  font-family: var(--font-mono);
+}
+
+[data-rmd-theme="sci-fi"] .md-hint,
+[data-rmd-theme="sci-fi"] .local-validation-hint {
+  color: var(--ink-muted);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  line-height: var(--leading-snug);
+}
+
+[data-rmd-theme="sci-fi"] .md-slider label {
+  gap: var(--space-2);
+}
+
+[data-rmd-theme="sci-fi"] .md-slider-value {
+  min-width: 5ch;
+  padding: 1px var(--space-1);
+  border: 1px solid var(--line);
+  background: var(--surface-subtle);
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-label);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* Square track and thumb: a rail with a sliding block. Geometry is declared
+   once in tokens.css; this layer supplies the square corners and hairline. */
+[data-rmd-theme="sci-fi"] .local-slider [data-rmd-part="track"],
+[data-rmd-theme="sci-fi"] .local-range-slider [data-rmd-part="track"],
+[data-rmd-theme="sci-fi"] .local-slider [data-rmd-part="fill"],
+[data-rmd-theme="sci-fi"] .local-range-slider [data-rmd-part="fill"],
+[data-rmd-theme="sci-fi"] .local-slider [data-rmd-part="thumb"],
+[data-rmd-theme="sci-fi"] .local-range-slider [data-rmd-part="thumb"],
+[data-rmd-theme="sci-fi"] .local-slider [data-rmd-slider="arc"] [role="slider"],
+[data-rmd-theme="sci-fi"] .local-range-slider [data-rmd-slider="arc"] [role="slider"] {
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-slider [data-rmd-part="track"],
+[data-rmd-theme="sci-fi"] .local-range-slider [data-rmd-part="track"] {
+  border: 1px solid var(--line-strong);
+  background: var(--rmd-slider-track-background, var(--control-track));
+}
+
+[data-rmd-theme="sci-fi"] .local-slider [data-rmd-part="fill"],
+[data-rmd-theme="sci-fi"] .local-range-slider [data-rmd-part="fill"] {
+  background: var(--rmd-slider-fill-background, var(--accent));
+}
+
+[data-rmd-theme="sci-fi"] .local-slider [data-rmd-part="thumb"],
+[data-rmd-theme="sci-fi"] .local-range-slider [data-rmd-part="thumb"],
+[data-rmd-theme="sci-fi"] .local-slider [data-rmd-slider="arc"] [role="slider"],
+[data-rmd-theme="sci-fi"] .local-range-slider [data-rmd-slider="arc"] [role="slider"] {
+  border: var(--rmd-slider-thumb-border-width, 2px) solid
+    var(--rmd-slider-thumb-border-color, var(--surface));
+  background: var(--rmd-slider-thumb-background, var(--accent));
+  box-shadow: var(--rmd-slider-thumb-shadow, 0 0 0 1px var(--accent));
+}
+
+/* Square selection marks. Checked boxes keep the box; the tick is drawn in
+   accent ink, so light and dark modes need separate glyph colours. */
+[data-rmd-theme="sci-fi"] .local-checkbox .md-toggle-label input,
+[data-rmd-theme="sci-fi"] .local-checklist-item input,
+[data-rmd-theme="sci-fi"] .local-multi-option input,
+[data-rmd-theme="sci-fi"] .local-radio-option input {
+  width: var(--rmd-uiarc-checkbox-size, 16px);
+  height: var(--rmd-uiarc-checkbox-size, 16px);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background-color: var(--sf-field-bg);
+  transition:
+    border-color var(--motion-base) var(--ease-standard),
+    background-color var(--motion-base) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-checkbox .md-toggle-label input[type="checkbox"]:checked,
+[data-rmd-theme="sci-fi"] .local-checklist-item input:checked,
+[data-rmd-theme="sci-fi"] .local-multi-option input:checked {
+  -webkit-mask-image: none;
+  mask-image: none;
+  border-color: var(--accent);
+  background-color: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3.2L13 4.5' fill='none' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+}
+
+[data-rmd-theme="sci-fi"][data-color-scheme="dark"] .local-checkbox .md-toggle-label input[type="checkbox"]:checked,
+[data-rmd-theme="sci-fi"][data-color-scheme="dark"] .local-checklist-item input:checked,
+[data-rmd-theme="sci-fi"][data-color-scheme="dark"] .local-multi-option input:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3.2L13 4.5' fill='none' stroke='%2303161c' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+/* D2 / §2.2.2: <toggle> 与 <checkbox> 的 DOM 相同，上面的勾选规则已收窄到
+   .local-checkbox，这里为真正的开关补回独立皮肤：40×20 方形轨道 + 14px 滑块。
+   几何推导：travel = 40(轨道) − 2×1(边框) − 14(滑块) − 2×2(两侧间隙) = 20px。
+   两端用 left/right 2px 表达，不写 20px 魔法数。 */
+[data-rmd-theme="sci-fi"] .local-toggle .md-toggle-label input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  inline-size: 40px;
+  block-size: 20px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background-color: var(--sf-field-bg);
+  /* 一层画滑块；轨道颜色由 background-color 承担 */
+  background-image: linear-gradient(var(--control-thumb), var(--control-thumb));
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  background-position: left 2px center;
+  /* tokens.css supplies --rmd-switch-shadow as a hard 1px ring, which
+     replaces the baseline's blurred inset shadow. The fallback here is the
+     same ring written out, so the declaration cannot resolve to nothing. */
+  box-shadow: var(--rmd-switch-shadow, 0 0 0 1px var(--line));
+  cursor: pointer;
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    background-position var(--motion-base) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-toggle .md-toggle-label input[type="checkbox"]:checked {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  background-image: linear-gradient(var(--accent-ink), var(--accent-ink));
+  background-position: right 2px center;
+}
+
+[data-rmd-theme="sci-fi"] .local-toggle .md-toggle-label:hover
+  input[type="checkbox"]:not(:disabled):not(:checked) {
+  border-color: var(--sf-field-hover, var(--accent-line));
+}
+
+[data-rmd-theme="sci-fi"] .local-toggle .md-toggle-label
+  input[type="checkbox"]:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+[data-rmd-theme="sci-fi"] .local-toggle .md-toggle-label
+  input[type="checkbox"]:disabled {
+  border-color: var(--line);
+  /* §2.2.2 写的是 background-color: var(--sf-hatch)，但 --sf-hatch 是
+     repeating-linear-gradient，放在 background-color 里整条声明会被丢弃。
+     这里不覆盖背景：未选中继承 --sf-field-bg，选中保留 accent，统一由
+     opacity 压暗，滑块（background-image）也不会被抹掉。 */
+  opacity: var(--disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* N1 / §3.1: 主题用 background-image 覆盖了 :checked，基线靠 accent-color
+   表达的混合态因此失效；这里补一条居中的 2px 信号线。
+   与 §3.1 的 :is(...) 写法等价，展开为三条以便 lint 逐条校验根作用域。 */
+[data-rmd-theme="sci-fi"] .local-checkbox .md-toggle-label input[type="checkbox"]:indeterminate,
+[data-rmd-theme="sci-fi"] .local-checklist-item input[type="checkbox"]:indeterminate,
+[data-rmd-theme="sci-fi"] .local-multi-option input[type="checkbox"]:indeterminate {
+  -webkit-mask-image: none;
+  mask-image: none;
+  border-color: var(--accent);
+  background-color: var(--accent);
+  background-image: linear-gradient(var(--accent-ink), var(--accent-ink));
+  background-size: 8px 2px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+[data-rmd-theme="sci-fi"] .local-radio-option input[type="radio"]:checked {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  background-image: linear-gradient(var(--accent-ink), var(--accent-ink));
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 6px 6px;
+}
+
+/* One focus language for every square selection mark: the same 2px ring the
+   buttons and fields use, offset so it never clips the 1px control border. */
+[data-rmd-theme="sci-fi"] .local-checkbox .md-toggle-label input:focus-visible,
+[data-rmd-theme="sci-fi"] .local-checklist-item input:focus-visible,
+[data-rmd-theme="sci-fi"] .local-multi-option input:focus-visible,
+[data-rmd-theme="sci-fi"] .local-radio-option input:focus-visible,
+[data-rmd-theme="sci-fi"].local-document .md-task-checkbox:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Disabled marks keep their glyph (background-image is not reset) so a locked
+   selection still reads as checked; the shared opacity carries the state. */
+[data-rmd-theme="sci-fi"] .local-checkbox .md-toggle-label input[type="checkbox"]:disabled,
+[data-rmd-theme="sci-fi"] .local-checklist-item input:disabled,
+[data-rmd-theme="sci-fi"] .local-multi-option input:disabled,
+[data-rmd-theme="sci-fi"] .local-radio-option input:disabled,
+[data-rmd-theme="sci-fi"].local-document .md-task-checkbox:disabled {
+  border-color: var(--line);
+  color: var(--ink-muted);
+  opacity: var(--disabled-opacity);
+  cursor: not-allowed;
+}
+
+[data-rmd-theme="sci-fi"].local-document .md-task-checkbox {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"].local-document .md-task-checkbox:checked {
+  border-color: var(--accent);
+  background-color: var(--accent);
+}
+
+[data-rmd-theme="sci-fi"].local-document .md-toggle-label {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid transparent;
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"].local-document .md-toggle-label:hover:has(input:not(:disabled)) {
+  border-color: var(--line);
+  background: var(--surface-hover);
+}
+
+/* D8: <choices> renders in three shapes and only one of them is segmented.
+
+   2-4 options  -> segmented: the baseline paints ONE sliding thumb on
+                   .local-choice-list::before and keeps every segment
+                   transparent. An opaque segment would cover the thumb.
+   >=5 options  -> chips: every chip carries its own background and border.
+   radio-group  -> a different component entirely.
+
+   The rules below are scoped to the segmented shape only. The chip shape
+   keeps the baseline surface and gains the theme's square corners in the
+   96-additions block instead. */
+
+/* The track that holds the thumb. */
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(2):last-child),
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(3):last-child),
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(4):last-child) {
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--surface-subtle);
+}
+
+/* The sliding thumb is the only filled surface: a hairline square that the
+   kernel translates onto the selected segment. `--pu-choice-count` and
+   `--pu-choice-index` are set by the component. */
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(2):last-child)::before,
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(3):last-child)::before,
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(4):last-child)::before {
+  border: 1px solid var(--accent);
+  border-radius: 0;
+  background: var(--accent-soft);
+  box-shadow: none;
+}
+
+/* Segments stay transparent so the thumb shows through, and the selection is
+   read from the thumb plus the accent label. */
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(2):last-child) .local-choice,
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(3):last-child) .local-choice,
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(4):last-child) .local-choice {
+  min-height: var(--control-height);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-label);
+  letter-spacing: calc(0.03em * var(--sf-track-scale));
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(2):last-child) .local-choice.is-selected,
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(3):last-child) .local-choice.is-selected,
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(4):last-child) .local-choice.is-selected {
+  background: transparent;
+  color: var(--accent-text);
+}
+
+/* The >=5 chip shape keeps the baseline surface but takes the theme's corners
+   and mono label, so it reads as the same family as the segmented track. */
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(5)) .local-choice {
+  border-radius: 0;
+  background: var(--surface);
+  border-color: var(--line-strong);
+  color: var(--ink);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-label);
+  letter-spacing: calc(0.03em * var(--sf-track-scale));
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    border-color var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(5)) .local-choice.is-selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+/* Pressed: a segment must stay transparent so the sliding thumb shows through,
+   so both shapes take the hairline ring and only the chips add the active fill. */
+[data-rmd-theme="sci-fi"] .local-choice:active:not(:disabled) {
+  box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+
+[data-rmd-theme="sci-fi"] .local-choice-list:has(> .local-choice:nth-child(5)) .local-choice:active:not(:disabled) {
+  background: var(--surface-active);
+}
+
+[data-rmd-theme="sci-fi"] .local-radio-group {
+  margin: var(--space-3) 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+[data-rmd-theme="sci-fi"] .local-radio-group legend,
+[data-rmd-theme="sci-fi"] .local-checklist legend {
+  padding: 0 var(--space-1);
+}
+
+[data-rmd-theme="sci-fi"] .local-radio-option {
+  min-height: var(--control-height);
+  font-size: var(--text-sm);
+}
+
+[data-rmd-theme="sci-fi"] .local-checklist {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface);
+}
+
+/* Bug 5: multi-select options hugged the fieldset edge; add the checklist fieldset inset so the checkbox column lines up. */
+[data-rmd-theme="sci-fi"] .local-multi-select {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface);
+}
+
+[data-rmd-theme="sci-fi"] .local-multi-search {
+  border-radius: 0;
+  background: var(--sf-field-bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+/* The search field is the input itself in the current DOM; the descendant
+   selector keeps the ring if a wrapper is ever introduced. */
+[data-rmd-theme="sci-fi"] .local-multi-search:focus-visible,
+[data-rmd-theme="sci-fi"] .local-multi-search input:focus-visible {
+  border-color: var(--accent);
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+[data-rmd-theme="sci-fi"] .local-multi-option {
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-multi-option:hover {
+  background: var(--surface-hover);
+}
+
+[data-rmd-theme="sci-fi"] .local-multi-list {
+  border-top: 1px solid var(--line);
+}
+
+[data-rmd-theme="sci-fi"] .local-multi-count,
+[data-rmd-theme="sci-fi"] .local-multi-empty {
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+/* Bug 4: jump button is an <a>, so the link skin left it underlined and start-aligned; centre the label and drop the rule. */
+[data-rmd-theme="sci-fi"] a.local-jump-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Bug 4: the document link hover halo leaked onto the jump button; keep the plain button hover. */
+[data-rmd-theme="sci-fi"] .md-document a.local-jump-button:hover {
+  box-shadow: none;
+}
+/* ---------------------------------------------------------- 7. navigation */
+
+[data-rmd-theme="sci-fi"] .local-tabs-label,
+[data-rmd-theme="sci-fi"] .local-steps-label,
+[data-rmd-theme="sci-fi"] .local-accordion-label {
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-micro) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-tablist {
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--sf-nav-bg);
+  overflow-x: auto;
+}
+
+/* The baseline underline slides in equal shares of the padding box; gaps or
+   content-sized tabs break that geometry, so separators live on the tabs. */
+[data-rmd-theme="sci-fi"] .local-tab + .local-tab {
+  border-left: 1px solid var(--line);
+}
+
+[data-rmd-theme="sci-fi"] .local-tablist::after {
+  height: 2px;
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: var(--control-height);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-bottom: 0;
+  border-radius: 0;
+  background: var(--sf-nav-bg);
+  color: var(--ink-muted);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-align: center;
+  text-transform: uppercase;
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-tab:hover {
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+
+[data-rmd-theme="sci-fi"] .local-tab:active:not(:disabled) {
+  background: var(--surface-active);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .local-tab.is-selected {
+  background: var(--sf-nav-active-bg);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .local-tab:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: -2px;
+}
+
+[data-rmd-theme="sci-fi"] .local-tabpanel {
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-top: 0;
+  border-radius: 0;
+  background: var(--surface);
+}
+
+[data-rmd-theme="sci-fi"] .local-steps-nav {
+  gap: 1px;
+  padding: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+[data-rmd-theme="sci-fi"].local-document .local-steps-nav .md-button {
+  min-height: var(--control-height);
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--sf-nav-bg);
+}
+
+[data-rmd-theme="sci-fi"] .local-steps-status {
+  padding: 0 var(--space-2);
+  color: var(--ink-soft);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-steps-panel {
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface);
+}
+
+/* D6.1: square step nodes — 20px dot on the 4px grid. The baseline circle
+   already squares off through --radius-circle: 0 in tokens.css. */
+[data-rmd-theme="sci-fi"] .local-steps-rail {
+  --pu-rail-dot: 20px;
+  --pu-rail-track: var(--line);
+  --pu-rail-fill: var(--accent);
+}
+
+/* D6.1: 1px structural ring outside the 20px dot; numerals in mono. */
+[data-rmd-theme="sci-fi"] .local-steps-dot {
+  border-width: 1px;
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+}
+
+/* N3b: one hairline under the tick row replaces the tiled bar-code gradient. */
+[data-rmd-theme="sci-fi"] .local-visual-timeline-axis {
+  border-bottom: 1px solid var(--line);
+}
+
+/* N3b: tick labels take the mono micro data voice; 0.1em tracking stays clear of overlap. */
+[data-rmd-theme="sci-fi"] .local-visual-timeline-tick {
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+}
+
+[data-rmd-theme="sci-fi"] .local-accordion {
+  border-top: 0;
+}
+
+/* The disclosure heading is an h3; the document h3 rhythm must not leak
+   into the trigger row as empty bands and double rules. */
+[data-rmd-theme="sci-fi"].md-document .local-disclosure-heading {
+  margin: 0;
+  padding: 0;
+  border-bottom: 0;
+}
+
+[data-rmd-theme="sci-fi"] .local-disclosure {
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface);
+}
+
+[data-rmd-theme="sci-fi"] .local-disclosure + .local-disclosure {
+  border-top: 0;
+}
+
+[data-rmd-theme="sci-fi"].local-document .local-disclosure-trigger {
+  min-height: var(--control-height-lg);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0;
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  text-transform: uppercase;
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-disclosure-trigger[aria-expanded="true"] {
+  background: var(--accent-soft);
+  box-shadow: inset 2px 0 0 var(--accent);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .local-disclosure-trigger:hover {
+  background: var(--surface-hover);
+}
+
+[data-rmd-theme="sci-fi"] .local-disclosure-trigger:active:not(:disabled) {
+  background: var(--surface-active);
+  box-shadow: inset 2px 0 0 var(--accent-line);
+}
+
+[data-rmd-theme="sci-fi"] .local-disclosure-panel {
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+[data-rmd-theme="sci-fi"] .local-disclosure:has(.local-disclosure-trigger[aria-expanded="false"]) .local-disclosure-panel {
+  height: 0;
+  padding: 0;
+  border-top: 0;
+  visibility: hidden;
+}
+
+[data-rmd-theme="sci-fi"] .local-chevron {
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+}
+
+/* ---------------------------------------------------- 8. feedback & status */
+
+[data-rmd-theme="sci-fi"] .md-badge {
+  padding: 2px var(--space-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  line-height: var(--leading-snug);
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .md-badge-neutral {
+  border-color: var(--line-strong);
+  background: var(--surface-subtle);
+  color: var(--ink-soft);
+}
+
+[data-rmd-theme="sci-fi"] .md-badge-success {
+  border-color: var(--success-line);
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+[data-rmd-theme="sci-fi"] .md-badge-warning {
+  border-color: var(--warning-line);
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+[data-rmd-theme="sci-fi"] .local-alert {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-left: var(--sf-rule) solid var(--info);
+  border-radius: 0;
+  background: var(--surface-subtle);
+}
+
+[data-rmd-theme="sci-fi"] .local-alert-title {
+  color: var(--info);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-alert-success {
+  border-left-color: var(--success);
+  background: color-mix(in srgb, var(--success-soft) 55%, var(--surface));
+}
+
+[data-rmd-theme="sci-fi"] .local-alert-success .local-alert-title {
+  color: var(--success);
+}
+
+[data-rmd-theme="sci-fi"] .local-alert-warning {
+  border-left-color: var(--warning);
+  background: color-mix(in srgb, var(--warning-soft) 55%, var(--surface));
+}
+
+[data-rmd-theme="sci-fi"] .local-alert-warning .local-alert-title {
+  color: var(--warning);
+}
+
+[data-rmd-theme="sci-fi"] .local-error,
+[data-rmd-theme="sci-fi"] .local-visual-alert {
+  border: 1px solid var(--danger-line);
+  border-radius: 0;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+[data-rmd-theme="sci-fi"] .local-progress-head {
+  align-items: center;
+  gap: var(--space-2);
+}
+
+[data-rmd-theme="sci-fi"] .local-progress-value {
+  color: var(--accent-text);
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .local-progress-track {
+  position: relative;
+  height: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--control-track);
+}
+
+/* N2: nine-domain segmented meter drawn as one overlay; the fill underneath
+   is a flat accent bar (the 45-degree hatch is removed below), so the two
+   fill languages are never combined. */
+[data-rmd-theme="sci-fi"] .local-progress-track::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 calc(10% - 1px),
+    var(--surface) calc(10% - 1px) 10%
+  );
+}
+
+/* N2 + D6.7: flat accent fill on a square bar; baseline width transition is
+   300ms, outside the 80/120/180 contract, so it moves to --motion-slow. */
+[data-rmd-theme="sci-fi"] .local-progress-fill {
+  border-radius: 0;
+  background: var(--local-progress-color, var(--accent));
+  transition: width var(--motion-slow) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-timer {
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface);
+}
+
+[data-rmd-theme="sci-fi"] .local-timer-value {
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  letter-spacing: calc(var(--sf-track-component) * var(--sf-track-scale));
+}
+
+[data-rmd-theme="sci-fi"] .local-counter-value,
+[data-rmd-theme="sci-fi"] .local-timer-status,
+[data-rmd-theme="sci-fi"] .local-steps-status {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The baseline paints the floating bubble with constant --tooltip-ink at
+   higher specificity; own the whole paint contract or light mode inherits
+   white text on a white surface. */
+[data-rmd-theme="sci-fi"].md-document .local-tooltip:not(.local-static-tooltip) .local-tooltip-bubble {
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------- 9. code & math */
+
+[data-rmd-theme="sci-fi"].md-document .md-code {
+  margin: var(--space-4) 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--code-ink) 20%, var(--code-bg));
+  border-radius: 0;
+  /* One surface per code container: .md-code-block owns the fill, this
+     element stays transparent so no line can band against a second layer. */
+  background: transparent;
+  color: var(--code-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-code-block {
+  border: 1px solid color-mix(in srgb, var(--code-ink) 20%, var(--code-bg));
+  border-radius: 0;
+  background: var(--code-bg);
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-code-block-toolbar {
+  min-height: 34px;
+  padding: 0 var(--space-1) 0 var(--space-3);
+  border-bottom: 1px solid color-mix(in srgb, var(--code-ink) 18%, var(--code-bg-deep));
+  background: var(--code-bg-deep);
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-code-block-language,
+[data-rmd-theme="sci-fi"].md-document .md-code-block-copy,
+[data-rmd-theme="sci-fi"].md-document .md-code-block-feedback {
+  font-family: var(--sf-font-data);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-code-block-language::before {
+  content: "◆ ";
+  color: var(--accent);
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-code-block-copy {
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-code-block-copy:hover {
+  background: color-mix(in srgb, var(--code-ink) 16%, transparent);
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-code-block-copy:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+[data-rmd-theme="sci-fi"].md-document .md-code-block > .md-code {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* The baseline paints `code` with the inline-code fill. Inside a block that
+   fill repeats on every line box, which is what reads as a per-line band.
+   Cancel it here so the container fill is the only surface, and inherit the
+   container ink so plain text matches the code tokens. */
+[data-rmd-theme="sci-fi"].md-document .md-code-block .md-code code {
+  background: transparent;
+  color: inherit;
+}
+
+[data-rmd-theme="sci-fi"] .local-math-display {
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* -------------------------------------------- 9b. shared control shells */
+
+/* Arc select and date picker. The outer component classes and the
+   data-rmd-part="trigger" hook are the stable interfaces; internal class
+   hashes stay implementation details. Square shells, mono labels. */
+
+[data-rmd-theme="sci-fi"] .local-select [data-rmd-part="trigger"],
+[data-rmd-theme="sci-fi"] .local-select [role="combobox"] {
+  border: 1px solid var(--sf-field-border, var(--line-strong));
+  border-radius: 0;
+  background: var(--sf-field-bg, var(--surface));
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  box-shadow: none;
+  transition:
+    border-color var(--motion-base) var(--ease-standard),
+    background-color var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-base) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-select [data-rmd-part="trigger"]:hover:not([data-disabled]):not(:disabled),
+[data-rmd-theme="sci-fi"] .local-select [role="combobox"]:hover:not([data-disabled]):not(:disabled) {
+  border-color: var(--sf-field-hover, var(--accent-line));
+  background: var(--sf-field-bg, var(--surface));
+}
+
+[data-rmd-theme="sci-fi"] .local-select [data-rmd-part="trigger"]:focus-visible,
+[data-rmd-theme="sci-fi"] .local-select [data-rmd-part="trigger"][data-state="open"],
+[data-rmd-theme="sci-fi"] .local-select [role="combobox"]:focus-visible,
+[data-rmd-theme="sci-fi"] .local-select [role="combobox"][data-state="open"] {
+  border-color: var(--accent);
+  outline: var(--focus-outline);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+[data-rmd-theme="sci-fi"] .local-date-picker [data-rmd-part="trigger"],
+[data-rmd-theme="sci-fi"] .local-date-picker button[aria-haspopup="dialog"] {
+  border: 1px solid var(--sf-field-border, var(--line-strong));
+  border-radius: 0;
+  background: var(--sf-field-bg, var(--surface));
+  color: var(--ink);
+  box-shadow: none;
+  transition:
+    border-color var(--motion-base) var(--ease-standard),
+    background-color var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-base) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .local-date-picker [data-rmd-part="trigger"]:hover:not(:disabled),
+[data-rmd-theme="sci-fi"] .local-date-picker button[aria-haspopup="dialog"]:hover:not(:disabled) {
+  border-color: var(--sf-field-hover, var(--accent-line));
+  background: var(--sf-field-bg, var(--surface));
+}
+
+[data-rmd-theme="sci-fi"] .local-date-picker [data-rmd-part="trigger"]:focus-visible,
+[data-rmd-theme="sci-fi"] .local-date-picker [data-rmd-part="trigger"][aria-expanded="true"],
+[data-rmd-theme="sci-fi"] .local-date-picker button[aria-haspopup="dialog"]:focus-visible,
+[data-rmd-theme="sci-fi"] .local-date-picker button[aria-haspopup="dialog"][aria-expanded="true"] {
+  border-color: var(--accent);
+  outline: var(--focus-outline);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+/* Invalid triggers carry the danger stroke on the shell itself; the inset ring
+   keeps the 1px border from reading as a double line. Placed after the focus
+   and open rules so the error stroke survives both states. */
+[data-rmd-theme="sci-fi"] .local-select [data-rmd-part="trigger"][aria-invalid="true"],
+[data-rmd-theme="sci-fi"] .local-select [role="combobox"][aria-invalid="true"],
+[data-rmd-theme="sci-fi"] .local-date-picker [data-rmd-part="trigger"][aria-invalid="true"],
+[data-rmd-theme="sci-fi"] .local-date-picker button[aria-haspopup="dialog"][aria-invalid="true"] {
+  border-color: var(--danger);
+  box-shadow: inset 0 0 0 1px var(--danger);
+}
+
+[data-rmd-theme="sci-fi"] .local-select [data-rmd-part="trigger"][aria-invalid="true"]:focus-visible,
+[data-rmd-theme="sci-fi"] .local-select [role="combobox"][aria-invalid="true"]:focus-visible,
+[data-rmd-theme="sci-fi"] .local-date-picker [data-rmd-part="trigger"][aria-invalid="true"]:focus-visible,
+[data-rmd-theme="sci-fi"] .local-date-picker button[aria-haspopup="dialog"][aria-invalid="true"]:focus-visible {
+  outline-color: var(--danger);
+}
+
+/* One disabled skin for every trigger shape: the structural border, muted ink
+   and the shared opacity, whether the kernel writes :disabled or data-disabled. */
+[data-rmd-theme="sci-fi"] .local-select [data-rmd-part="trigger"]:disabled,
+[data-rmd-theme="sci-fi"] .local-select [data-rmd-part="trigger"][data-disabled],
+[data-rmd-theme="sci-fi"] .local-select [role="combobox"]:disabled,
+[data-rmd-theme="sci-fi"] .local-select [role="combobox"][data-disabled],
+[data-rmd-theme="sci-fi"] .local-date-picker [data-rmd-part="trigger"]:disabled,
+[data-rmd-theme="sci-fi"] .local-date-picker [data-rmd-part="trigger"][data-disabled],
+[data-rmd-theme="sci-fi"] .local-date-picker button[aria-haspopup="dialog"]:disabled,
+[data-rmd-theme="sci-fi"] .local-date-picker button[aria-haspopup="dialog"][data-disabled] {
+  border-color: var(--line);
+  background: var(--sf-field-bg, var(--surface));
+  color: var(--ink-muted);
+  opacity: var(--disabled-opacity);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+[data-rmd-theme="sci-fi"] .local-select [data-rmd-part="menu"],
+[data-rmd-theme="sci-fi"] .local-date-picker [data-rmd-part="popover"] {
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--line-strong);
+  font-family: var(--font-mono);
+}
+
+/* -------------------------------------------------- 9c. shared chart hooks */
+
+[data-rmd-theme="sci-fi"] .rmd-chart {
+  color: var(--ink);
+  font-family: var(--font-mono);
+}
+
+/* D4 §2.4.3: the plot surface inherited the baseline sans stack; all chart
+   text is machine data, so the SVG itself carries the mono font. */
+[data-rmd-theme="sci-fi"] .rmd-chart-svg {
+  font-family: var(--font-mono);
+}
+
+/* §2.4.2: the view writes stroke inline from --rmd-chart-grid, so a stroke
+   declaration here is dead. Paint lives in tokens.css; this rule owns only
+   the dash pattern. */
+[data-rmd-theme="sci-fi"] .rmd-chart-grid {
+  stroke-dasharray: 2 3;
+}
+
+/* §2.4.2: fill is written inline from --rmd-chart-axis, so paint is set in
+   tokens.css; only the label typography belongs to the theme. */
+[data-rmd-theme="sci-fi"] .rmd-chart-axis-label {
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+/* §2.4.2: the view writes fill inline from --rmd-chart-axis-title, so this
+   rule carries typography only; the ink colour lives in tokens.css. */
+[data-rmd-theme="sci-fi"] .rmd-chart-axis-title {
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+  font-weight: var(--weight-semibold);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+/* §2.4.2: stroke is written inline from --rmd-chart-guide, so the accent is
+   configured in tokens.css; keep only the dash pattern and opacity. */
+[data-rmd-theme="sci-fi"] .rmd-chart-guide {
+  stroke-dasharray: 3 3;
+  opacity: 0.8;
+}
+
+/* D4 §4.3 W3-4: readout and legend share one mono uppercase label voice;
+   tabular numerals keep changing values from shifting the line. */
+[data-rmd-theme="sci-fi"] .rmd-chart-readout {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .rmd-chart-empty {
+  border: 1px dashed var(--line-strong);
+  border-radius: 0;
+  background: var(--surface-subtle);
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-chart-legend {
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+[data-rmd-theme="sci-fi"] .rmd-chart-legend-item {
+  border: 1px solid transparent;
+  border-radius: 0;
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    border-color var(--motion-base) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-chart-legend-item.is-highlighted {
+  border-color: var(--line);
+  background: var(--surface-hover);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-chart-legend-item.is-selected {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-chart-legend-item:active:not(:disabled) {
+  border-color: var(--accent-line);
+  background: var(--surface-active);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-chart-legend-item:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* D4 §2.4.3 / §4.3 W3-4: legend labels repeat the readout voice. The
+   baseline legend button resets to --text-xs, so the micro size is restated
+   on the label to match .rmd-chart-readout; ellipsis behaviour is untouched. */
+[data-rmd-theme="sci-fi"] .rmd-chart-legend-label {
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+/* D4 §2.4.3: shares are data, so they use tabular numerals and muted ink at
+   the same micro size as the label beside them. */
+[data-rmd-theme="sci-fi"] .rmd-chart-legend-share {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-rmd-theme="sci-fi"] .rmd-chart-swatch {
+  border-radius: 0;
+}
+
+/* N4 §3.4 + §3.6.4: cut the bottom-right corner to 8px so it lands on the
+   4px grid, and redraw that edge with a 45-degree gradient hairline because
+   clip-path clips both the border and any outward shadow there. The view
+   sets position: absolute inline, so no position is repeated here. */
+[data-rmd-theme="sci-fi"] .rmd-chart-tooltip {
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background-color: var(--surface);
+  background-image: linear-gradient(
+    to top right,
+    transparent calc(50% - 0.5px),
+    var(--line-strong) calc(50% - 0.5px) calc(50% + 0.5px),
+    transparent calc(50% + 0.5px)
+  );
+  background-size: 8px 8px;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+  box-shadow: none;
+  color: var(--ink);
+  font-family: var(--font-mono);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-chart-tooltip-title {
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+}
+
+/* D4 §2.4.3: label/value rows keep an 8px gap and 4px vertical rhythm. */
+[data-rmd-theme="sci-fi"] .rmd-chart-tooltip-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-1) 0;
+}
+
+/* D4 §2.4.3: dot and label sit together with a 4px gap and top alignment. */
+[data-rmd-theme="sci-fi"] .rmd-chart-tooltip-label {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+/* D4 §2.4.3: values read as a data column; mono tabular numerals keep digits
+   from shifting, and trailing alignment is stated here so it does not depend
+   on the baseline auto margin alone. */
+[data-rmd-theme="sci-fi"] .rmd-chart-tooltip-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+/* D4 §2.4.3: foot notes are secondary machine text; mono, micro, muted. */
+[data-rmd-theme="sci-fi"] .rmd-chart-tooltip-foot {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+}
+
+/* ------------------------------------------------- 9d. shared diagram hooks */
+
+[data-rmd-theme="sci-fi"] .rmd-diagram {
+  --diagram-dot: color-mix(in srgb, var(--line-strong) 60%, transparent);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-stage {
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background-color: var(--surface-subtle);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-toolbar {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+/* D3 §2.3.3: 该圆角同时由 --radius-toolbar（tokens.css）归零；
+   显式 border-radius 保留作双保险，避免依赖跨文件变量。 */
+[data-rmd-theme="sci-fi"] .rmd-diagram-zoom {
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--surface);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-zoom button {
+  border-radius: 0;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-zoom button:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--accent-text);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-zoom button:active:not(:disabled) {
+  background: var(--surface-active);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-zoom button:disabled {
+  border-color: var(--line);
+  color: var(--ink-muted);
+  opacity: var(--disabled-opacity);
+  cursor: not-allowed;
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-hint {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-aux) * var(--sf-track-scale));
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-tooltip {
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--line-strong);
+  font-family: var(--font-mono);
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-tooltip-head {
+  border-bottom: 1px solid var(--line);
+}
+
+/* D3 §2.3.3: 同上，--radius-inset 已在 tokens.css 归零；
+   显式 border-radius 保留作双保险，不重复声明。 */
+[data-rmd-theme="sci-fi"] .rmd-diagram-tooltip-close {
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"] .rmd-diagram-tooltip-close:hover {
+  background: var(--surface-hover);
+}
+
+/* ------------------------------------------------------- 9e. Mafs surface */
+
+[data-rmd-theme="sci-fi"] .local-mafs-coordinate .MafsView,
+[data-rmd-theme="sci-fi"] .local-mafs-plot .MafsView {
+  --mafs-bg: transparent;
+  --mafs-fg: var(--ink-soft);
+  --mafs-origin-color: var(--line-strong);
+  --mafs-line-color: var(--chart-grid);
+  --grid-line-subdivision-color: color-mix(in srgb, var(--chart-grid) 55%, transparent);
+  --mafs-axis-stroke-width: 1px;
+
+  border-radius: 0;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-rmd-theme="sci-fi"] .local-coordinate-surface.local-mafs-surface {
+  background: transparent;
+}
+
+[data-rmd-theme="sci-fi"] .local-coordinate-pad.local-mafs-coordinate {
+  aspect-ratio: auto;
+  touch-action: auto;
+  overflow: visible;
+}
+
+/* -------------------------------------------------------- 10. misc & print */
+
+[data-rmd-theme="sci-fi"].local-document .local-fallback-block {
+  border: 1px dashed var(--line-strong);
+  border-radius: 0;
+  background: var(--surface-subtle);
+  font-family: var(--font-mono);
+}
+
+[data-rmd-theme="sci-fi"] .local-footnotes {
+  border-top: 1px solid var(--line);
+}
+
+[data-rmd-theme="sci-fi"].local-document .local-footnote-ref-link,
+[data-rmd-theme="sci-fi"].local-document .local-footnote-backlink {
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+}
+
+[data-rmd-theme="sci-fi"] .md-image-zoom-figure,
+[data-rmd-theme="sci-fi"] .md-image-zoom {
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"] .md-image-zoom-close {
+  border-radius: 0;
+}
+
+/* ---------------------------------------------- 12. component gap fill */
+/* Blocks here fill parts of the design system that previously inherited the
+   default skin. Order: steps already in §7; calendar / gallery / quiz /
+   status / loading below. */
+
+/* D6.2: the twelve UIArc component radii are declared in tokens.css. They are
+   component variables rather than classic radius tokens, so they cannot be
+   derived from --radius-*; see the "UIArc component radius" block there. */
+
+/* D6.3: gallery arrows drop from the default 44px circle to a 32px square
+   on the 4px grid, with a 1px structural ring. */
+[data-rmd-theme="sci-fi"] .rmd-gallery-button {
+  border-radius: 0;
+  inline-size: 32px;
+  block-size: 32px;
+  flex-basis: 32px;
+  border-width: 1px;
+}
+
+/* D6.3: the scroll thumb becomes a 2px signal line rather than a pill. */
+[data-rmd-theme="sci-fi"] .rmd-gallery-thumb {
+  border-radius: 0;
+  block-size: 2px;
+}
+
+/* D6.3: position counter and captions join the mono uppercase data voice. */
+[data-rmd-theme="sci-fi"] .rmd-gallery-count,
+[data-rmd-theme="sci-fi"] .rmd-gallery-caption {
+  font-family: var(--font-mono);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+/* D6.4: quiz frame picks up the accent rule and square shell used by alerts
+   and panels; structure is untouched. */
+[data-rmd-theme="sci-fi"] .local-quiz {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-left: var(--sf-rule) solid var(--accent);
+  border-radius: 0;
+  background: var(--surface-subtle);
+}
+
+/* D6.4: correct / incorrect feedback use the semantic fill plus mono text so
+   the verdict reads as machine output. */
+[data-rmd-theme="sci-fi"] .local-quiz-feedback.is-correct {
+  border-color: var(--success-line);
+  background: var(--success-soft);
+  color: var(--success);
+  font-family: var(--font-mono);
+}
+
+[data-rmd-theme="sci-fi"] .local-quiz-feedback.is-incorrect {
+  border-color: var(--danger-line);
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-family: var(--font-mono);
+}
+
+/* D6.4: the explanation stays secondary text. */
+[data-rmd-theme="sci-fi"] .local-quiz-explanation {
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+}
+
+/* D6.5: the status dot is a 2px square, keeping its 1:1 ratio; the chip
+   itself drops the pill radius and takes the label type. */
+[data-rmd-theme="sci-fi"] .md-status::before {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 0;
+}
+
+[data-rmd-theme="sci-fi"] .md-status {
+  padding: 2px var(--space-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--sf-type-micro);
+  letter-spacing: calc(var(--sf-track-label) * var(--sf-track-scale));
+  text-transform: uppercase;
+}
+
+/* D6.5: loading text uses the data voice at reading size. */
+[data-rmd-theme="sci-fi"] .md-loading {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+/* D6.5: spinner is a square with a 1px ring and one accent edge; no glow. */
+[data-rmd-theme="sci-fi"] .md-spinner {
+  border-width: 1px;
+  border-radius: 0;
+  border-color: var(--line);
+  border-top-color: var(--accent);
+}
+
+/* D6.5: skeleton uses static surface tones only. The baseline shimmer is an
+   animation, which a theme cannot re-author (no keyframes), so it is off. */
+[data-rmd-theme="sci-fi"] .md-skeleton {
+  border-radius: 0;
+  background-color: var(--surface-subtle);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--surface-hover) 50%,
+    transparent 100%
+  );
+  animation: none;
+}
+
+/* D6.8: browser autofill would repaint the field with its own yellow; the
+   inset shadow keeps the themed field colour and the text ink. */
+[data-rmd-theme="sci-fi"] .md-text-input:-webkit-autofill,
+[data-rmd-theme="sci-fi"] .md-text-input:-webkit-autofill:hover,
+[data-rmd-theme="sci-fi"] .md-text-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--sf-field-bg) inset;
+  -webkit-text-fill-color: var(--ink);
+}
+
+/* D6.8: the caret is an accent tick rather than the platform default. */
+[data-rmd-theme="sci-fi"] .md-text-input {
+  caret-color: var(--accent);
+}
+/* --------------------------------------------------------- 11. adaptation */
+
+@media (max-width: 720px) {
+  [data-rmd-theme="sci-fi"].md-document {
+    padding: var(--space-4) var(--space-3);
+    border-left: 0;
+    border-right: 0;
+    background-size: 32px 32px;
+  }
+
+  [data-rmd-theme="sci-fi"].md-document h1 {
+    font-size: 24px;
+  }
+
+  [data-rmd-theme="sci-fi"] .local-tablist {
+    flex-wrap: nowrap;
+  }
+
+  [data-rmd-theme="sci-fi"] .local-tab {
+    padding: 0 var(--space-2);
+  }
+}
+
+/* Touch pointers get the 44px target family: the control heights are the only
+   geometry the components read, so every button, field, tab and trigger grows
+   from these three values without restating any component rule. */
+@media (pointer: coarse) {
+  [data-rmd-theme="sci-fi"] {
+    --control-height-sm: 36px;
+    --control-height: 44px;
+    --control-height-lg: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-rmd-theme="sci-fi"] *,
+  [data-rmd-theme="sci-fi"] *::before,
+  [data-rmd-theme="sci-fi"] *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  [data-rmd-theme="sci-fi"].md-document {
+    max-width: none;
+    padding: 0;
+    border: 0;
+    background-image: none;
+  }
+
+  [data-rmd-theme="sci-fi"] .local-panel,
+  [data-rmd-theme="sci-fi"] .md-card,
+  [data-rmd-theme="sci-fi"] .local-visual,
+  [data-rmd-theme="sci-fi"] .local-alert {
+    break-inside: avoid;
+  }
+}
+
+}

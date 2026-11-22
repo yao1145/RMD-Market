@@ -1,0 +1,373 @@
+import { useEffect, useRef, useState, type KeyboardEvent, type RefObject } from 'react';
+import {
+  defineReactComponentPackage,
+  type LocalComponentContext,
+} from 'reactive-md/react';
+import { useSwipe, useComponentState } from 'reactive-md/react/runtime';
+import { game2048 } from './manifest';
+import {
+  createGameState,
+  move,
+  tileTier,
+  type Cell2048,
+  type Direction2048,
+  type Game2048State,
+  type Game2048Status,
+} from './game-engine';
+
+interface Game2048Options {
+  readonly size: number;
+  readonly seed: number;
+  readonly target: number;
+}
+
+function numberProp(
+  context: LocalComponentContext,
+  name: string,
+  fallback: number,
+  minimum: number,
+  maximum: number,
+): number {
+  const raw = context.props[name];
+  const value = typeof raw === 'number' && Number.isFinite(raw) ? raw : fallback;
+  return Math.max(minimum, Math.min(maximum, Math.round(value)));
+}
+
+function readOptions(context: LocalComponentContext): Game2048Options {
+  return {
+    size: numberProp(context, 'size', 4, 3, 6),
+    seed: numberProp(context, 'seed', 7, 0, 99999),
+    target: numberProp(context, 'target', 2048, 8, 131072),
+  };
+}
+
+function readLabel(context: LocalComponentContext): string {
+  const raw = context.props.label;
+  return typeof raw === 'string' && raw.length > 0 ? raw : '2048';
+}
+
+function cellKey(cell: Cell2048): string {
+  return `${cell.row}:${cell.column}`;
+}
+
+const ICON_PATHS = {
+  left: 'M19 12H5M11 18l-6-6 6-6',
+  right: 'M5 12h14M13 6l6 6-6 6',
+  up: 'M12 19V5M6 11l6-6 6 6',
+  down: 'M12 5v14M6 13l6 6 6-6',
+} as const;
+
+function Icon(props: { readonly path: keyof typeof ICON_PATHS }) {
+  return (
+    <svg
+      className="rmd-2048-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d={ICON_PATHS[props.path]} />
+    </svg>
+  );
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isCell(value: unknown): value is Cell2048 {
+  return isRecord(value)
+    && typeof value.row === 'number' && Number.isInteger(value.row)
+    && typeof value.column === 'number' && Number.isInteger(value.column);
+}
+
+function isGame2048State(value: unknown): value is Game2048State {
+  if (!isRecord(value)) return false;
+  const { size, seed, target, board, score, moves, status, rng, spawned, merged } = value;
+  if (typeof size !== 'number' || !Number.isInteger(size) || size < 3 || size > 6) return false;
+  if (typeof seed !== 'number' || !Number.isFinite(seed)) return false;
+  if (typeof target !== 'number' || !Number.isFinite(target)) return false;
+  if (!Array.isArray(board) || board.length !== size) return false;
+  if (!board.every((row) => Array.isArray(row) && row.length === size
+    && row.every((cell) => typeof cell === 'number' && Number.isFinite(cell)))) return false;
+  if (typeof score !== 'number' || !Number.isFinite(score)) return false;
+  if (typeof moves !== 'number' || !Number.isFinite(moves)) return false;
+  if (status !== 'playing' && status !== 'won' && status !== 'over') return false;
+  if (typeof rng !== 'number' || !Number.isFinite(rng)) return false;
+  return Array.isArray(spawned) && spawned.every(isCell)
+    && Array.isArray(merged) && merged.every(isCell);
+}
+
+function BoardView(props: {
+  readonly board: readonly (readonly number[])[];
+  readonly label: string;
+  readonly interactive: boolean;
+  readonly tabIndex: number;
+  readonly boardRef?: RefObject<HTMLDivElement | null>;
+  readonly spawned?: readonly Cell2048[];
+  readonly merged?: readonly Cell2048[];
+  readonly onKeyDown?: (event: KeyboardEvent<HTMLDivElement>) => void;
+}) {
+  const spawned = new Set((props.spawned ?? []).map(cellKey));
+  const merged = new Set((props.merged ?? []).map(cellKey));
+  return (
+    <div
+      ref={props.boardRef}
+      className="rmd-2048-board"
+      data-game-2048-board
+      role="grid"
+      aria-label={props.label}
+      aria-rowcount={props.board.length}
+      aria-colcount={props.board.length}
+      aria-readonly={props.interactive ? undefined : true}
+      tabIndex={props.tabIndex}
+      onKeyDown={props.onKeyDown}
+      style={{
+        gridTemplateColumns: `repeat(${props.board.length}, minmax(0, 1fr))`,
+        width: `calc(var(--rmd-2048-cell) * ${props.board.length} + var(--rmd-2048-gap) * ${props.board.length + 1})`,
+      }}
+    >
+      {props.board.map((row, y) => (
+        <div className="rmd-2048-row" role="row" key={y}>
+          {row.map((value, x) => (
+            <span
+              key={x}
+              className="rmd-2048-cell"
+              role="gridcell"
+              aria-label={value === 0 ? '' : String(value)}
+              data-game-2048-cell
+              data-value={value}
+              data-tier={tileTier(value)}
+              data-spawn={spawned.has(`${y}:${x}`) ? 'true' : undefined}
+              data-merged={merged.has(`${y}:${x}`) ? 'true' : undefined}
+            >
+              {value === 0 ? null : <span className="rmd-2048-tile">{value}</span>}
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function statusText(context: LocalComponentContext, status: Game2048Status): string {
+  if (status === 'won') return context.locale.t('You win', '已达成');
+  if (status === 'over') return context.locale.t('Game over', '已结束');
+  return context.locale.t('Playing', '进行中');
+}
+
+export function Game2048(context: LocalComponentContext) {
+  const options = readOptions(context);
+  const label = readLabel(context);
+  const debug = context.props.debug === true;
+  const locked = context.disabled;
+
+  const { value: game, setValue } = useComponentState<Game2048State>(context, {
+    initial: () => createGameState(options),
+    validate: (value): value is Game2048State => isGame2048State(value)
+      && value.size === options.size
+      && value.seed === options.seed
+      && value.target === options.target,
+    version: 1,
+    autoSave: context.props['save-progress'] !== false,
+  });
+  const gameRef = useRef(game);
+  gameRef.current = game;
+  // The engine reducers read the previous state; adapt them to the hook's
+  // value setter while still saving every accepted update.
+  const updateGame = (next: Game2048State | ((previous: Game2048State) => Game2048State)): void => {
+    setValue(typeof next === 'function' ? next(gameRef.current) : next);
+  };
+  const [exploded, setExploded] = useState(false);
+
+  const signature = `${options.size}:${options.seed}:${options.target}`;
+  const signatureRef = useRef(signature);
+  useEffect(() => {
+    if (signatureRef.current === signature) return;
+    signatureRef.current = signature;
+    updateGame(createGameState(options));
+  }, [signature, options.size, options.seed, options.target]);
+
+  if (exploded) {
+    throw new Error('2048 exploded during render');
+  }
+
+  const t = context.locale.t;
+  const apply = (direction: Direction2048): void => {
+    if (locked) return;
+    updateGame((previous) => move(previous, direction));
+  };
+
+  const resetGame = (): void => {
+    context.runtime.reset(context.content);
+    updateGame(createGameState(options));
+  };
+
+  const boardRef = useRef<HTMLDivElement | null>(null);
+  useSwipe(boardRef, {
+    onSwipe: (direction) => apply(direction),
+  }, {
+    threshold: 24,
+    axis: 'both',
+    preventScroll: true,
+    disabled: locked,
+  });
+
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>): void => {
+    if (locked) return;
+    switch (event.key) {
+      case 'ArrowLeft':
+      case 'a':
+      case 'A':
+        event.preventDefault();
+        apply('left');
+        break;
+      case 'ArrowRight':
+      case 'd':
+      case 'D':
+        event.preventDefault();
+        apply('right');
+        break;
+      case 'ArrowUp':
+      case 'w':
+      case 'W':
+        event.preventDefault();
+        apply('up');
+        break;
+      case 'ArrowDown':
+      case 's':
+      case 'S':
+        event.preventDefault();
+        apply('down');
+        break;
+      case 'r':
+      case 'R':
+        event.preventDefault();
+        updateGame(createGameState(options));
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <div
+      className="rmd-2048 md-panel"
+      data-game-2048
+      data-state={game.status}
+      data-points={game.score}
+      data-moves={game.moves}
+    >
+      <div className="rmd-2048-head">
+        <strong className="rmd-2048-title">{label}</strong>
+        <output className={`rmd-2048-status md-badge md-badge-${game.status === 'won' ? 'success' : game.status === 'over' ? 'danger' : 'neutral'}`} data-game-2048-status>
+          {statusText(context, game.status)}
+        </output>
+      </div>
+      <div className="rmd-2048-body">
+        <div className="rmd-2048-screen">
+          <BoardView
+            board={game.board}
+            interactive
+            label={`${label}: ${t(
+              'Use arrow keys, W A S D or swipe to move tiles, and R to restart.',
+              '使用方向键、W A S D 或滑动来移动方块，R 重开。',
+            )}`}
+            tabIndex={locked ? -1 : 0}
+            spawned={game.spawned}
+            merged={game.merged}
+            boardRef={boardRef}
+            onKeyDown={onKeyDown}
+          />
+          {game.status === 'over' ? (
+            <div className="rmd-2048-overlay" aria-hidden="true">
+              <strong>{statusText(context, game.status)}</strong>
+              <span>{`${t('Score', '得分')} ${game.score}`}</span>
+            </div>
+          ) : null}
+        </div>
+        <aside className="rmd-2048-side" aria-label={t('Game information', '游戏信息')}>
+          <dl className="rmd-2048-stats">
+            <div>
+              <dt>{t('Score', '得分')}</dt>
+              <dd data-game-2048-score>{game.score}</dd>
+            </div>
+            <div>
+              <dt>{t('Moves', '步数')}</dt>
+              <dd data-game-2048-moves>{game.moves}</dd>
+            </div>
+            <div>
+              <dt>{t('Target', '目标')}</dt>
+              <dd data-game-2048-target>{game.target}</dd>
+            </div>
+          </dl>
+          <div className="rmd-2048-controls">
+            <div className="rmd-2048-pad">
+              <button type="button" data-game-2048-up disabled={locked} onClick={() => apply('up')} aria-label={t('Move up', '上移')}><Icon path="up" /></button>
+              <button type="button" data-game-2048-left disabled={locked} onClick={() => apply('left')} aria-label={t('Move left', '左移')}><Icon path="left" /></button>
+              <button type="button" data-game-2048-down disabled={locked} onClick={() => apply('down')} aria-label={t('Move down', '下移')}><Icon path="down" /></button>
+              <button type="button" data-game-2048-right disabled={locked} onClick={() => apply('right')} aria-label={t('Move right', '右移')}><Icon path="right" /></button>
+            </div>
+            <div className="rmd-2048-actions">
+              <button type="button" className="md-button-primary" data-game-2048-new disabled={locked} onClick={() => updateGame(createGameState(options))}>
+                {t('New', '新局')}
+              </button>
+              <button type="button" data-game-2048-reset onClick={resetGame}>{t('Reset', '重置')}</button>
+              {debug ? (
+                <button type="button" data-game-2048-break onClick={() => setExploded(true)}>
+                  {t('Break', '模拟错误')}
+                </button>
+              ) : null}
+            </div>
+          </div>
+          <p className="rmd-2048-hint">
+            {t(
+              'Arrows / WASD / swipe · R restart',
+              '方向键 / WASD / 滑动 · R 重开',
+            )}
+          </p>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
+export function Game2048Static(context: LocalComponentContext) {
+  const options = readOptions(context);
+  const label = readLabel(context);
+  const initial = createGameState(options);
+  const t = context.locale.t;
+  return (
+    <div className="rmd-2048 rmd-2048-static md-panel" data-game-2048-static data-state={initial.status}>
+      <div className="rmd-2048-head">
+        <strong className="rmd-2048-title">{label}</strong>
+        <span className="rmd-2048-status md-badge md-badge-neutral">
+          {options.size} × {options.size}
+        </span>
+      </div>
+      <BoardView
+        board={initial.board}
+        interactive={false}
+        label={`${label}: ${t('Static preview', '静态预览')}`}
+        tabIndex={-1}
+        spawned={initial.spawned}
+      />
+      <p className="rmd-2048-static-note" data-game-2048-static-note>
+        {t('Open the document in a browser to play.', '在浏览器中打开本文档即可游玩。')}
+      </p>
+    </div>
+  );
+}
+
+/**
+ * The component package is the authoring declaration consumed by every host.
+ * Preview, authoring, SSR and offline export compose it once.
+ */
+export const game2048Package = defineReactComponentPackage({
+  ...game2048,
+  render: Game2048,
+  renderStatic: Game2048Static,
+});

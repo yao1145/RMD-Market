@@ -1,0 +1,228 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background: #f5f2eb;
+}
+
+.bitcoin-page {
+  --page-bg: #f5f2eb;
+  --page-panel: #fffdf8;
+  --page-ink: #26231f;
+  --page-muted: #6f6b63;
+  --page-line: #ded8cc;
+  --page-accent: #b85c00;
+  --page-code-bg: #f2eee4;
+  --page-glow: rgb(247 147 26 / 0.14);
+  min-height: 100vh;
+  padding: clamp(2rem, 6vw, 4.5rem) clamp(1rem, 5vw, 4rem);
+  color: var(--page-ink);
+  background:
+    radial-gradient(60rem 30rem at 15% -10%, var(--page-glow), transparent 60%),
+    var(--page-bg);
+  font-family: "Iowan Old Style", "Palatino Linotype", "Noto Serif SC", serif;
+}
+
+.bitcoin-page[data-scheme='dark'] {
+  --page-bg: #0e1116;
+  --page-panel: #151a21;
+  --page-ink: #f2ede4;
+  --page-muted: #a19a8e;
+  --page-line: #2a3039;
+  --page-accent: #f7931a;
+  --page-code-bg: #10141a;
+  --page-glow: rgb(247 147 26 / 0.08);
+  color-scheme: dark;
+  background:
+    radial-gradient(60rem 30rem at 15% -10%, var(--page-glow), transparent 60%),
+    var(--page-bg);
+}
+
+.page-head {
+  max-inline-size: 62rem;
+  margin: 0 auto 2.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: var(--page-accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.lede {
+  max-inline-size: 44rem;
+  margin: 1.25rem 0 0;
+  color: var(--page-muted);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.7;
+}
+
+.page-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-start: 1.5rem;
+}
+
+.page-facts span {
+  padding: 0.35rem 0.7rem;
+  color: var(--page-muted);
+  border: 1px solid var(--page-line);
+  border-radius: 999px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.preview-shell {
+  inline-size: min(100%, 62rem);
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background: var(--page-panel);
+  border: 1px solid var(--page-line);
+  border-radius: 1.4rem;
+  box-shadow: 0 24px 60px -40px rgb(0 0 0 / 0.45);
+}
+
+.preview-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block-end: 1rem;
+  border-block-end: 1px solid var(--page-line);
+}
+
+.preview-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--page-ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.preview-toggle input {
+  inline-size: 1.05rem;
+  block-size: 1.05rem;
+  accent-color: var(--page-accent);
+}
+
+.preview-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.preview-toolbar button {
+  padding: 0.5rem 0.9rem;
+  color: var(--page-ink);
+  background: transparent;
+  border: 1px solid var(--page-line);
+  border-radius: 0.65rem;
+  font: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.preview-toolbar button:hover {
+  border-color: var(--page-accent);
+  background: var(--page-code-bg);
+}
+
+.preview-toolbar button:focus-visible {
+  outline: 2px solid var(--page-accent);
+  outline-offset: 2px;
+}
+
+.preview-document {
+  display: grid;
+  place-items: center;
+  min-block-size: 28rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem) 0;
+}
+
+.preview-document > * {
+  max-inline-size: 34rem;
+}
+
+.preview-document .md-document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+}
+
+.preview-document .md-document > p {
+  align-self: stretch;
+}
+
+.source-panel {
+  inline-size: min(100%, 62rem);
+  margin: 1.5rem auto 0;
+  padding: 1rem 1.25rem;
+  background: var(--page-panel);
+  border: 1px solid var(--page-line);
+  border-radius: 1rem;
+}
+
+.source-panel summary {
+  color: var(--page-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.source-panel pre {
+  margin: 1rem 0 0;
+  padding: 1rem;
+  overflow: auto;
+  color: var(--page-ink);
+  background: var(--page-code-bg);
+  border-radius: 0.65rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.page-note {
+  inline-size: min(100%, 62rem);
+  margin: 1.5rem auto 0;
+  color: var(--page-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+
+.page-note code {
+  padding: 0.1rem 0.35rem;
+  background: var(--page-code-bg);
+  border-radius: 0.35rem;
+}
+
+@media (max-width: 40rem) {
+  .preview-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

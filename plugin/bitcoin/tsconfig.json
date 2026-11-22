@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "typeRoots": ["../../../ReactiveMD/node_modules/@types"],
+    "types": ["node"],
+    "paths": {
+      "reactive-md/sdk": ["../../../ReactiveMD/dist-library/types/sdk/index.d.ts"],
+      "reactive-md/react": ["../../../ReactiveMD/dist-library/types/react/index.d.ts"],
+      "reactive-md/presets/default": ["../../../ReactiveMD/dist-library/types/presets/default.d.ts"],
+      "reactive-md/runtime": ["../../../ReactiveMD/dist-library/types/runtime-services/index.d.ts"],
+      "reactive-md": ["../../../ReactiveMD/dist-library/types/index.d.ts"],
+      "react": ["../../../ReactiveMD/node_modules/@types/react/index.d.ts"],
+      "react/jsx-runtime": ["../../../ReactiveMD/node_modules/@types/react/jsx-runtime.d.ts"],
+      "react-dom": ["../../../ReactiveMD/node_modules/@types/react-dom/index.d.ts"],
+      "react-dom/client": ["../../../ReactiveMD/node_modules/@types/react-dom/client.d.ts"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
+  "exclude": ["dist"]
+}
