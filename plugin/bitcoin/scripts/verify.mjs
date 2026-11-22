@@ -1,11 +1,11 @@
 import { spawn } from 'node:child_process';
 import { mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { chromium } from '../../../../ReactiveMD/node_modules/playwright/index.mjs';
+import { chromium } from 'playwright';
 
 const pageUrl = process.env.BITCOIN_DEMO_URL ?? 'http://127.0.0.1:5211/';
 const demoRoot = fileURLToPath(new URL('..', import.meta.url));
-const vite = fileURLToPath(new URL('../../../../ReactiveMD/node_modules/vite/bin/vite.js', import.meta.url));
+const vite = fileURLToPath(new URL('../node_modules/vite/bin/vite.js', import.meta.url));
 const artifactDirectory = fileURLToPath(new URL('../artifacts/', import.meta.url));
 await mkdir(artifactDirectory, { recursive: true });
 

@@ -1438,7 +1438,6 @@ function pee(e) {
 	}));
 }
 var Qt = "reactive-md/default", $t = ee;
-// ../../ReactiveMD/dist-library/config-validation-BydO7PPO.js
 function en(e, t, n) {
 	if (!e) return;
 	let r = e, i = e.options ?? [], a = e.constraints ?? (r.min !== void 0 || r.max !== void 0 || r.step !== void 0 ? {
@@ -4341,7 +4340,6 @@ function Ir(e, t) {
 	}
 	return Fr(a, t), Object.freeze(a);
 }
-// ../../ReactiveMD/dist-library/props-DGlBk0e5.js
 var Uee = /* @__PURE__ */ new Set(/* @__PURE__ */ "aliceblue.antiquewhite.aqua.aquamarine.azure.beige.bisque.black.blanchedalmond.blue.blueviolet.brown.burlywood.cadetblue.chartreuse.chocolate.coral.cornflowerblue.cornsilk.crimson.cyan.darkblue.darkcyan.darkgoldenrod.darkgray.darkgreen.darkgrey.darkkhaki.darkmagenta.darkolivegreen.darkorange.darkorchid.darkred.darksalmon.darkseagreen.darkslateblue.darkslategray.darkslategrey.darkturquoise.darkviolet.deeppink.deepskyblue.dimgray.dimgrey.dodgerblue.firebrick.floralwhite.forestgreen.fuchsia.gainsboro.ghostwhite.gold.goldenrod.gray.green.greenyellow.grey.honeydew.hotpink.indianred.indigo.ivory.khaki.lavender.lavenderblush.lawngreen.lemonchiffon.lightblue.lightcoral.lightcyan.lightgoldenrodyellow.lightgray.lightgreen.lightgrey.lightpink.lightsalmon.lightseagreen.lightskyblue.lightslategray.lightslategrey.lightsteelblue.lightyellow.lime.limegreen.linen.magenta.maroon.mediumaquamarine.mediumblue.mediumorchid.mediumpurple.mediumseagreen.mediumslateblue.mediumspringgreen.mediumturquoise.mediumvioletred.midnightblue.mintcream.mistyrose.moccasin.navajowhite.navy.oldlace.olive.olivedrab.orange.orangered.orchid.palegoldenrod.palegreen.paleturquoise.palevioletred.papayawhip.peachpuff.peru.pink.plum.powderblue.purple.rebeccapurple.red.rosybrown.royalblue.saddlebrown.salmon.sandybrown.seagreen.seashell.sienna.silver.skyblue.slateblue.slategray.slategrey.snow.springgreen.steelblue.tan.teal.thistle.tomato.turquoise.violet.wheat.white.whitesmoke.yellow.yellowgreen".split(".")), Lr = /^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
 function Rr(e) {
 	return typeof e == "string" ? Lr.test(e) || Uee.has(e.toLowerCase()) : !1;
@@ -4488,7 +4486,6 @@ function Zr(e) {
 		...t.kind === "number" ? { step: s ?? 1 } : {}
 	};
 }
-// ../../ReactiveMD/dist-library/validation-BG5wuKER.js
 var Qr = (e) => e.attrs?.bind ?? `@${e.id}`, $r = class extends Error {
 	code;
 	constructor(e, t) {
@@ -6648,7 +6645,6 @@ function ns(e, t, n, r, i) {
 		column: o - t[c] + 1
 	};
 }
-// ../../ReactiveMD/dist-library/default-components-BdkPID3o.js
 var rs = Object.freeze([
 	{
 		id: "input",
@@ -10093,7 +10089,6 @@ function Rl(e, t) {
 	let n = Ll(t);
 	for (let t of n) if (t.name === e) return t;
 }
-// ../../ReactiveMD/dist-library/parser-standard-YlslNOI2.js
 var zl = /* @__PURE__ */ new Set([
 	65534,
 	65535,
@@ -20108,7 +20103,6 @@ var lse = Object.freeze({
 	}),
 	markdownStructure: cse
 });
-// ../../ReactiveMD/dist-library/options-C8Z7cjXQ.js
 function use(e) {
 	return Yo(e, {
 		defaults: Ll(),
@@ -20122,7 +20116,6 @@ function use(e) {
 		capabilities: lse
 	});
 }
-// ../../ReactiveMD/dist-library/compiler-core-DQjiDtTh.js
 var dse = Object.create, Yh = Object.defineProperty, fse = Object.getOwnPropertyDescriptor, pse = Object.getOwnPropertyNames, mse = Object.getPrototypeOf, hse = Object.prototype.hasOwnProperty, gse = (e, t) => () => (t || (e((t = { exports: {} }).exports, t, t.exports), e = null), t.exports), _se = (e, t) => {
 	let n = {};
 	for (var r in e) Yh(n, r, {
@@ -31896,7 +31889,6 @@ function Ede(e, t) {
 		params: { name: n.name ?? "" }
 	}, n.range.start, n.range.end));
 }
-// ../../ReactiveMD/dist-library/math-display-Dr2g1BiM.js
 var Xy = class e extends Error {
 	constructor(t, n) {
 		var r = "KaTeX parse error: " + t, i, a, o = n && n.loc;
@@ -55894,7 +55886,6 @@ function jme(e, t = !1) {
 function Mme(e, t = !0) {
 	return jme(e, t).issues;
 }
-// ../../ReactiveMD/dist-library/compiler-BAnLLuaU.js
 function Nme(e, t) {
 	return my(Ime(e, t));
 }
@@ -55934,7 +55925,6 @@ function Ime(e, t, n, r, i) {
 	let a = use(t);
 	return a.ok ? Oy(e, t, a, Fme(r), n, i) : Pme(a);
 }
-// ../../ReactiveMD/dist-library/component-state-Cq2K5gkS.js
 var Lme = new TextEncoder(), VC = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/, Rme = /^[^\u0000-\u001f\u007f]{1,256}$/;
 function HC(e) {
 	let t = Lme.encode(e), n = 2166136261;
@@ -56348,7 +56338,6 @@ function iw(e) {
 	}
 	return C !== void 0 && S.restore(C), Object.freeze(S);
 }
-// ../../ReactiveMD/dist-library/runtime-Dkq7ldyg.js
 var rhe = 64, ihe = 16;
 function ahe() {
 	let e = () => typeof performance < "u" && typeof performance.now == "function" ? performance.now() : Date.now(), t = (e, t) => globalThis.setTimeout(e, t), n = (e) => {
@@ -56517,7 +56506,6 @@ function uhe(e) {
 		scheduler: n
 	});
 }
-// ../../ReactiveMD/dist-library/runtime-3dALP_gl.js
 function dhe(e) {
 	let t = /* @__PURE__ */ new Map();
 	for (let n of Ra(e.nodes)) t.set(n.id, n);
@@ -57670,7 +57658,6 @@ function Mhe(e, t) {
 		}
 	}), T(), ee(), de;
 }
-// ../../ReactiveMD/dist-library/resources-p1wVZWki.js
 var Nhe = 128, Phe = 16777216, Fhe = 5e5;
 function Cw(e, t) {
 	return {
@@ -57870,7 +57857,6 @@ function ww(e) {
 		diagnostics: t
 	};
 }
-// ../../ReactiveMD/dist-library/shareable-DyuM5y4V.js
 var Uhe = "reactive-md-state/v1", Whe = 1048576, Ghe = /^fnv1a32:[0-9a-f]{8}$/, Khe = /* @__PURE__ */ new Set([
 	"format",
 	"syntax",
@@ -58723,7 +58709,7 @@ function Sge(e, t, n, r, i, a, o = 100, s) {
 	}
 	return xge(p, n, r, i, a);
 }
-// ../../ReactiveMD/node_modules/react/cjs/react.production.js
+// react/cjs/react.production.js
 var Hw = /* @__PURE__ */ o(((e) => {
 	var t = Symbol.for("react.transitional.element"), n = Symbol.for("react.portal"), r = Symbol.for("react.fragment"), i = Symbol.for("react.strict_mode"), a = Symbol.for("react.profiler"), o = Symbol.for("react.consumer"), s = Symbol.for("react.context"), c = Symbol.for("react.forward_ref"), l = Symbol.for("react.suspense"), u = Symbol.for("react.memo"), d = Symbol.for("react.lazy"), f = Symbol.for("react.activity"), p = Symbol.for("react.view_transition"), m = Symbol.iterator;
 	function h(e) {
@@ -156183,7 +156169,7 @@ function bze({ document: e, runtime: t, onDiagnostics: n, urlPolicy: r, locale: 
 		})
 	});
 }
-// ../../ReactiveMD/node_modules/scheduler/cjs/scheduler.production.js
+// scheduler/cjs/scheduler.production.js
 var xze = /* @__PURE__ */ o(((e) => {
 	function t(e, t) {
 		var n = e.length;
@@ -165031,7 +165017,6 @@ function Mze(e, t, n = {}) {
 function Nze(e, t) {
 	return Mze(e, t);
 }
-// ../../ReactiveMD/dist-library/react-BLTDnZ7H.js
 function tW(e) {
 	let t = ww(e);
 	if (t.diagnostics.length) throw TypeError(t.diagnostics.map((e) => `[${e.code}] ${e.message}`).join("\n"));

@@ -20,8 +20,10 @@ const notices = [
 // Only this explicitly allowed host module supplies implementations and files.
 const host = path.join(root, 'dist/build-host.mjs');
 await writeFile(host, [
+  "import {dirname,resolve} from 'node:path';",
+  "import {fileURLToPath} from 'node:url';",
   "export {config,reactConfig} from './node/entry.mjs';",
-  'export const root=' + JSON.stringify(root) + ';',
+  "export const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');",
   "export const allowlist=['src'];",
   "export const resources=[{id:'example/cattca.css',path:'src/component.css'}];",
   'export const notices=' + JSON.stringify(notices) + ';',

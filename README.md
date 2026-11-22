@@ -29,10 +29,3 @@ The game, network and survey plugins are source directories for a Demo-style `pl
 | Path | Name | Purpose |
 | --- | --- | --- |
 | `theme/sci-fi` | `sci-fi` | Semantic tokens, component styling and the notched-corner treatment for `<theme name="sci-fi">`. |
-
-## Sources
-
-- `skill/*`, `plugin/bitcoin` and `plugin/cattca-package` are collected from the workspace `others/` directory.
-- `plugin/game-2048`, `plugin/network`, `plugin/survey-tally`, `plugin/tetris` and `theme/sci-fi` are collected from `ReactiveMD-Demo`.
-
-Some demos expect a ReactiveMD engine checkout or installed package dependencies; install those in the package directory before running its scripts.

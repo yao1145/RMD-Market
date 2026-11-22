@@ -29,10 +29,3 @@ game-2048、network 与 survey-tally 是面向 Demo 式 `plugin/<name>/` 目录�
 | 路径 | 名称 | 用途 |
 | --- | --- | --- |
 | `theme/sci-fi` | `sci-fi` | 为 `<theme name="sci-fi">` 提供语义 token、组件样式与切角效果。 |
-
-## 来源
-
-- `skill/*`、`plugin/bitcoin` 与 `plugin/cattca-package` 来自工作区 `others/` 目录。
-- `plugin/game-2048`、`plugin/network`、`plugin/survey-tally`、`plugin/tetris` 与 `theme/sci-fi` 来自 `ReactiveMD-Demo`。
-
-部分演示需要 ReactiveMD 引擎检出或已安装的包依赖；运行脚本前请在对应包目录完成安装。

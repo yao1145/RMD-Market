@@ -6,10 +6,11 @@
 
 ## 运行预览
 
-预览复用引擎仓库已安装的 Vite、React 和构建产物：
+预览使用本目录安装的 Vite、React 和 ReactiveMD：
 
 ```sh
-cd ReactiveMD/others/plugin/bitcoin
+cd plugin/bitcoin
+npm install
 npm run dev
 ```
 
@@ -22,8 +23,6 @@ npm run verify:live  # 访问真实 Binance 官方行情镜像，确认实时报
 ```
 
 `npm run verify` 和 `npm run verify:live` 在 5211 没有响应时会自行启动 Vite，结束后关闭；截图写入 `artifacts/`。设置 `BITCOIN_DEMO_URL` 可以对已经运行的页面执行同一套检查。
-
-预览依赖 `ReactiveMD/dist-library`。如果缺少，先在引擎仓库运行 `npm run build:lib`。
 
 ## 文件
 
