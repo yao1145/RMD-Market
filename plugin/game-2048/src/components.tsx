@@ -4,7 +4,7 @@ import {
   type LocalComponentContext,
 } from 'reactive-md/react';
 import { useSwipe, useComponentState } from 'reactive-md/react/runtime';
-import { game2048 } from './manifest';
+import { game2048 } from './manifests';
 import {
   createGameState,
   move,

@@ -138,6 +138,8 @@ npm run test:browser  # 构建 + Edge/Playwright 浏览器冒烟测试
 
 | 路径 | 用途 |
 | --- | --- |
+| `index.ts` | Demo `plugin/<name>/` 目录模式的根级发现入口 |
+| `src/node-entry.ts` | 包入口与 SSR 入口 |
 | `src/cattca-engine.ts` | 安全解析器、表达式求值、解释器与预算 |
 | `src/manifests.ts` | `<cattca>` 的 manifest |
 | `src/components.tsx` | React 播放器、静态/SSR 输出与宿主配置 |

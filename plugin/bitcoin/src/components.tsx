@@ -3,7 +3,7 @@ import {
   defineReactComponentPackage,
   type LocalComponentContext,
 } from 'reactive-md/react';
-import { bitcoin } from './manifest';
+import { bitcoin } from './manifests';
 import { isBitcoinQuote, type BitcoinQuote } from './quote';
 
 type FeedPhase = 'connecting' | 'open' | 'closed';

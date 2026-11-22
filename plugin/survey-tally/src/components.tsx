@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { defineReactComponentPackage, type LocalComponentContext } from 'reactive-md/react';
 import { isSurveyCounts, type SurveyCounts } from './survey-contract';
+import { surveyTally } from './manifests';
 
 function SurveyTally({ locale, props, services, visible, mode }: LocalComponentContext) {
   const { t } = locale;
@@ -37,10 +38,6 @@ function SurveyTally({ locale, props, services, visible, mode }: LocalComponentC
 }
 
 export default defineReactComponentPackage({
-  id: 'reactive-md-demo/survey-tally',
-  name: 'survey-tally',
-  version: '1.0.0',
-  props: { label: { kind: 'string' } },
-  capabilities: { interactive: true, static: true, ssr: true, offline: true },
+  ...surveyTally,
   render: SurveyTally,
 });

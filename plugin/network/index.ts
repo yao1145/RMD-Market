@@ -1,1 +1,1 @@
-export { default } from 'reactive-md/plugins/network';
+export { default } from './src/node-entry';

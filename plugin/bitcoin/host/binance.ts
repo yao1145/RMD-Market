@@ -4,7 +4,7 @@ import type {
   SubscribeAdapter,
   SubscribeAdapterContext,
 } from 'reactive-md/runtime';
-import { isBitcoinQuote, type BitcoinQuote } from '../plugin/bitcoin/quote';
+import { isBitcoinQuote, type BitcoinQuote } from '../src/quote';
 
 const TICKER_EVENT = '24hrTicker';
 const DEFAULT_ENDPOINT = 'wss://data-stream.binance.vision/ws';

@@ -1,0 +1,12 @@
+{
+  "name": "reactive-md-network-package",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A directory plugin that re-exports the official ReactiveMD network components.",
+  "peerDependencies": {
+    "reactive-md": "^0.9.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

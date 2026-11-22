@@ -10,6 +10,7 @@ export {
   config,
   reactConfig,
 } from './components';
+export { cattcaPackage as default } from './components';
 export { cattca } from './manifests';
 export {
   CATTCA_LIMITS,

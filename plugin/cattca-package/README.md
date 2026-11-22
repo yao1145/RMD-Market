@@ -154,6 +154,8 @@ Set `PLAYWRIGHT_CHANNEL` when Edge is not the default browser.
 
 | Path | Purpose |
 | --- | --- |
+| `index.ts` | Root discovery shim for the Demo `plugin/<name>/` directory mode |
+| `src/node-entry.ts` | Package and SSR entry |
 | `src/cattca-engine.ts` | Safe parser, evaluator, interpreter and budgets |
 | `src/manifests.ts` | `<cattca>` manifest |
 | `src/components.tsx` | React player, SSR/static output and host config |

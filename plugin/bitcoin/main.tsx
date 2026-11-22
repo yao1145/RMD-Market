@@ -5,11 +5,11 @@ import { createReactConfig, LocalReactiveDocument } from 'reactive-md/react';
 import { defaultPreset } from 'reactive-md/presets/default';
 import type { NetworkConfig } from 'reactive-md/runtime';
 import 'reactive-md/styles.css';
-import './plugin/bitcoin/component.css';
+import './src/component.css';
 import './page.css';
-import source from './sample.reactive.md?raw';
-import { bitcoin } from './plugin/bitcoin/manifest';
-import bitcoinPackage from './plugin/bitcoin/components';
+import source from './sample/document.reactive.md?raw';
+import { bitcoin } from './src/manifests';
+import bitcoinPackage from './src/components';
 import { binanceTickerChannel } from './host/binance';
 
 const config = createLocalConfig({
@@ -92,7 +92,7 @@ function App() {
       </details>
 
       <p className="page-note">
-        组件位于 <code>plugin/bitcoin/</code>，宿主通道位于 <code>host/binance.ts</code>。
+        组件位于 <code>src/</code>，宿主通道位于 <code>host/binance.ts</code>。
         关闭开关会撤销宿主授权，组件随即停止订阅并显示未启用状态。
       </p>
     </main>
