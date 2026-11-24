@@ -37,3 +37,40 @@ test('print and forced-colors contexts may use raw fallback colors', () => {
   const source = '@media print { .x { color: #111111; } }';
   assert.deepEqual(auditCss(source).findings, []);
 });
+
+test('unrelated reduced-motion rules do not guard infinite animations', () => {
+  const source = `
+    .spinner, .skeleton { animation: pulse 0.8s linear infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .spinner { animation: none; }
+      .skeleton { transition: none; }
+    }
+  `;
+  assert.ok(auditCss(source).findings.some(({ rule }) => rule === 'MOTION-004'));
+});
+
+test('a matching reduced-motion override can stop a shorthand animation', () => {
+  const source = `
+    .spinner, .skeleton { animation: pulse 0.8s linear infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .skeleton, .spinner { animation: none; }
+    }
+  `;
+  assert.deepEqual(auditCss(source).findings, []);
+});
+
+test('the universal reduced-motion rule can limit a longhand animation', () => {
+  const source = `
+    .spinner::before {
+      animation-name: pulse;
+      animation-duration: 150ms;
+      animation-iteration-count: infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-iteration-count: 1 !important; }
+    }
+  `;
+  assert.deepEqual(auditCss(source).findings, []);
+  assert.ok(auditCss(source.replace('*, *::before, *::after', '*')).findings
+    .some(({ rule }) => rule === 'MOTION-004'));
+});

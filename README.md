@@ -10,6 +10,7 @@ A collection of ReactiveMD skills, component plugins and themes.
 | --- | --- |
 | `skill/reactive-md-authoring` | Author and edit `.reactive.md` documents: controls, bindings, computed values, charts, plots, diagrams, validation and diagnostics. |
 | `skill/reactive-md-extension-authoring` | Create custom component and theme packages: manifests, React implementations, scoped CSS, theme tokens and registration. |
+| [`skill/rmd-product-ui`](skill/rmd-product-ui/SKILL.md) | Apply or audit the ReactiveMD Product UI design language with light and dark tokens, component recipes, a CSS audit and an [interactive preview](skill/rmd-product-ui/preview.html). |
 
 ## Plugins
 

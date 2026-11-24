@@ -64,6 +64,8 @@ Rules:
 
 ## CSS recipes
 
+These recipes use native token names such as `--motion-fast`. Generate them with `node scripts/rmd-ui.mjs tokens --prefix=` from the skill directory, or adapt the variable names to your host prefix.
+
 ### State transition
 
 ```css

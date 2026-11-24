@@ -10,6 +10,7 @@ ReactiveMD 的 skill、组件插件与主题集合。
 | --- | --- |
 | `skill/reactive-md-authoring` | 编写和修改 `.reactive.md` 文档：控件、绑定、计算值、图表、曲线、图解、校验与诊断。 |
 | `skill/reactive-md-extension-authoring` | 创建自定义组件与主题包：manifest、React 实现、作用域 CSS、主题 token 与注册。 |
+| [`skill/rmd-product-ui`](skill/rmd-product-ui/SKILL.md) | 应用或审计 ReactiveMD Product UI 设计规范，包含明暗主题 token、组件样式示例、CSS 审计和[交互预览](skill/rmd-product-ui/preview.html)。 |
 
 ## Plugins
 

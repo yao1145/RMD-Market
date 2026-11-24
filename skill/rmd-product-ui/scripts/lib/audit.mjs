@@ -134,6 +134,28 @@ function isReducedMotion(ancestors) {
   return inAtRule(ancestors, /prefers-reduced-motion/i);
 }
 
+function animationSelectors(selector) {
+  // Preserve complex selector lists as written so commas inside functions or attributes are safe.
+  return /[\[(\\]/.test(selector) ? [selector] : selector.split(',').map((part) => part.trim());
+}
+
+function stopsInfiniteAnimation(prop, value) {
+  if (prop === 'animation' || prop === 'animation-name') return /^none$/i.test(value);
+  return prop === 'animation-iteration-count' && /^\d*\.?\d+(?:\s*,\s*\d*\.?\d+)*$/.test(value);
+}
+
+function hasAnimationGuard(selector, animation, overrides) {
+  const exactOverride = overrides.get(selector);
+  if (exactOverride) {
+    if (exactOverride.important === animation.important && exactOverride.order > animation.order) return true;
+    if (exactOverride.important && !animation.important) return true;
+  }
+
+  const pseudo = /(::[\w-]+|:(?:before|after|first-line|first-letter))(?=[:(]|$)/i.exec(selector)?.[0];
+  const universal = pseudo ? `*::${pseudo.replace(/^:+/, '').toLowerCase()}` : '*';
+  return !animation.important && Boolean(overrides.get(universal)?.important);
+}
+
 function checkEasing(value) {
   const problems = [];
   const bezierMatches = [...value.matchAll(/cubic-bezier\(([^)]*)\)/gi)];
@@ -198,9 +220,11 @@ export function auditCss(source, options = {}) {
   const findings = [];
   const seen = new Set();
   const focusReplacementTokens = collectFocusReplacements(root);
-  const hasReducedMotion = /@media[^{]*prefers-reduced-motion/i.test(source);
+  let hasReducedMotion = false;
   const animatedDeclarations = [];
   const infiniteDeclarations = [];
+  const animationOverrides = new Map();
+  let declarationOrder = 0;
 
   const suppressed = (lineNumber) => {
     const text = lines[lineNumber - 1] ?? '';
@@ -233,6 +257,18 @@ export function auditCss(source, options = {}) {
     const { prop, value } = declaration;
     const selector = selectorFor(node);
     const printOrForced = isPrintOrForcedColors(ancestors);
+    const reducedMotion = isReducedMotion(ancestors);
+    const order = declarationOrder++;
+    hasReducedMotion ||= reducedMotion;
+
+    if (node.type === 'rule' && stopsInfiniteAnimation(prop, value)
+      && inAtRule(ancestors, /^@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)\s*$/i)) {
+      for (const target of animationSelectors(selector)) {
+        if (declaration.important || !animationOverrides.get(target)?.important) {
+          animationOverrides.set(target, { important: declaration.important, order });
+        }
+      }
+    }
 
     if (prop === 'font-size') {
       const size = simplePx(value);
@@ -316,7 +352,7 @@ export function auditCss(source, options = {}) {
       }
     }
 
-    if (declaration.important && !isPrintOrForcedColors(ancestors) && !isReducedMotion(ancestors)) {
+    if (declaration.important && !printOrForced && !reducedMotion) {
       add('A11Y-002', node, declaration,
         '!important is used outside print, forced-colors or reduced-motion.',
       'Prefer cascade layers and scoped selectors over !important.');
@@ -330,7 +366,8 @@ export function auditCss(source, options = {}) {
 
     const motionProp = prop === 'transition' || prop === 'animation'
       || prop === 'transition-duration' || prop === 'animation-duration'
-      || prop === 'transition-delay' || prop === 'animation-delay';
+      || prop === 'transition-delay' || prop === 'animation-delay'
+      || prop === 'animation-iteration-count';
     if (!motionProp) return;
 
     animatedDeclarations.push({ declaration, node, ancestors });
@@ -341,7 +378,9 @@ export function auditCss(source, options = {}) {
     }
 
     const isInfinite = /\binfinite\b/i.test(value);
-    if (isInfinite) infiniteDeclarations.push({ declaration, node });
+    if (isInfinite && (prop === 'animation' || prop === 'animation-iteration-count')) {
+      infiniteDeclarations.push({ declaration, node, order });
+    }
 
     const times = timeValues(value);
     const allowed = prop.endsWith('-delay')
@@ -377,10 +416,11 @@ export function auditCss(source, options = {}) {
       'Add a reduced-motion block that disables transitions and settles entry states.');
   }
 
-  if (infiniteDeclarations.length && !hasReducedMotion) {
-    for (const { declaration, node } of infiniteDeclarations) {
+  for (const { declaration, node, order } of infiniteDeclarations) {
+    const animation = { important: declaration.important, order };
+    if (!animationSelectors(selectorFor(node)).every((selector) => hasAnimationGuard(selector, animation, animationOverrides))) {
       add('MOTION-004', node, declaration,
-        'Infinite animation has no reduced-motion guard in this file.',
+        'Infinite animation has no matching reduced-motion override in this file.',
         'Disable the animation under prefers-reduced-motion; keep the loading state visible.');
     }
   }
