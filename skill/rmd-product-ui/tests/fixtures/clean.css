@@ -1,0 +1,33 @@
+/* A clean baseline that follows the shared scale and provides a reduced-motion guard. */
+:root {
+  --ink: #111111;
+  --surface: #ffffff;
+  --line: #e6e4e3;
+}
+
+.card {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  transition:
+    background-color 150ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    color 150ms var(--ease-standard);
+  scale: 1;
+}
+
+.card:active {
+  scale: 0.97;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}

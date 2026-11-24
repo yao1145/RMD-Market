@@ -1,0 +1,14 @@
+{
+  "name": "rmd-product-ui-skill",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Scripts for the RMD Product UI design-language skill.",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "tokens": "node scripts/rmd-ui.mjs tokens",
+    "audit": "node scripts/rmd-ui.mjs audit",
+    "contrast": "node scripts/rmd-ui.mjs contrast",
+    "preview": "node scripts/rmd-ui.mjs preview"
+  }
+}
